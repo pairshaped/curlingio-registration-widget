@@ -1,0 +1,17 @@
+{
+  "name": "curling-io-products-widget",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:pairshaped/curling-io-products-widget.git",
+  "author": "Dave Rapin <dave@rapin.com>",
+  "license": "MIT",
+  "dependencies": {
+    "foreman": "^2.0.0",
+    "json-server": "^0.12.0"
+  },
+  "scripts": {
+    "start": "elm-reactor --port 3000",
+    "api": "node test-api/index.js",
+    "format": "prettier --no-semi --write \"{src,test-api}/**/*.{js,json}\""
+  }
+}
