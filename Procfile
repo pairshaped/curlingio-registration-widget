@@ -1,2 +1,2 @@
-web: yarn start
 api: yarn api
+web: yarn dev
