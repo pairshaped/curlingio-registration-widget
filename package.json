@@ -15,7 +15,7 @@
     "format": "prettier --no-semi --write \"{src,test-api}/**/*.{js,json}\"",
     "build": "elm-make src/Main.elm --output=dist/products-widget.js",
     "compress": "uglifyjs dist/products-widget.js --compress -o dist/products-widget.js",
-    "copy": "cp ./dist/products-widget.js ../../public/javascripts/products-widget.js",
+    "copy": "cp ./dist/products-widget.js ../../public/custom/products-widget.js",
     "deploy": "yarn build && yarn compress && yarn copy"
   },
   "devDependencies": {
