@@ -13,7 +13,7 @@ view selected =
         filters =
             [ All, Bundles, Leagues, Competitions, Other ]
     in
-        row Styles.Filters [ justify ] (List.map (viewFilter selected) filters)
+        row Styles.Filters [ spacing 10 ] (List.map (viewFilter selected) filters)
 
 
 viewFilter : Filter -> Filter -> Element Styles variation Msg

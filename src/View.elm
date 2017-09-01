@@ -14,7 +14,7 @@ view : Model -> Html Msg
 view model =
     Element.root stylesheet <|
         column Styles.Main
-            [ width (px 300), maxHeight (px 400), yScrollbar, padding 5, spacing 5 ]
+            [ padding 10, spacing 10 ]
             [ (Components.Filters.view model.filter)
             , viewProducts model.products model.filter
             ]
