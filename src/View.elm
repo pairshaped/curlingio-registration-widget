@@ -1,35 +1,41 @@
 module View exposing (..)
 
-import Html exposing (Html, div, text)
+import Element exposing (..)
+import Element.Attributes exposing (..)
+import Html exposing (Html)
 import RemoteData exposing (WebData)
-import Models exposing (Model, Product)
-import Msgs exposing (Msg)
-import Products.List
+import Types exposing (Msg, Model, Filter, Product)
+import Components.Filters
+import Components.Products
+import Styles exposing (..)
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ viewProducts model.products ]
+    Element.root stylesheet <|
+        column Styles.Main
+            [ width (px 300), padding 5, spacing 5 ]
+            [ (Components.Filters.view model.filter)
+            , viewProducts model.products model.filter
+            ]
 
 
-viewProducts : WebData (List Product) -> Html Msg
-viewProducts response =
-    div []
-        [ maybeList response ]
+viewProducts : WebData (List Product) -> Filter -> Element Styles variation Msg
+viewProducts response filter =
+    maybeList response filter
 
 
-maybeList : WebData (List Product) -> Html Msg
-maybeList response =
+maybeList : WebData (List Product) -> Filter -> Element Styles variation Msg
+maybeList response filter =
     case response of
         RemoteData.NotAsked ->
-            text ""
+            el None [] (text "")
 
         RemoteData.Loading ->
-            text "Loading products..."
+            el None [] (text "Loading products...")
 
         RemoteData.Success products ->
-            Products.List.view products
+            Components.Products.view products filter
 
         RemoteData.Failure error ->
-            text (toString error)
+            el None [] (text (toString error))

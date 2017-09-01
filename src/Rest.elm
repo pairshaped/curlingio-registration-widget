@@ -1,23 +1,22 @@
-module Commands exposing (..)
+module Rest exposing (..)
 
 import Http
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (decode, required)
-import Msgs exposing (Msg)
-import Models exposing (Product)
+import Types exposing (Msg(..), AccessKey, Product)
 import RemoteData
 
 
-fetchProducts : Cmd Msg
-fetchProducts =
-    Http.get productsUrl productsDecoder
+fetchProducts : AccessKey -> Cmd Msg
+fetchProducts accessKey =
+    Http.get (productsUrl accessKey) productsDecoder
         |> RemoteData.sendRequest
-        |> Cmd.map Msgs.OnFetchProducts
+        |> Cmd.map OnFetchProducts
 
 
-productsUrl : String
-productsUrl =
-    -- "https://curling.io/api/organizations/ACCESS_KEY/products"
+productsUrl : AccessKey -> String
+productsUrl accessKey =
+    -- "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
     "http://localhost:4000/products"
 
 
@@ -33,3 +32,4 @@ productDecoder =
         |> required "name" Decode.string
         |> required "price" Decode.string
         |> required "description" Decode.string
+        |> required "registration_type" Decode.string

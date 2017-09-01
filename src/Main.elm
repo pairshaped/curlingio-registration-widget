@@ -1,10 +1,9 @@
 module Main exposing (..)
 
-import Html exposing (program)
-import Commands exposing (fetchProducts)
-import Models exposing (Model, initialModel)
-import Msgs exposing (Msg)
-import Update exposing (update)
+import Html exposing (programWithFlags)
+import Rest exposing (fetchProducts)
+import Types exposing (Flags, Msg, Model)
+import State exposing (initialModel, update)
 import View exposing (view)
 
 
@@ -20,14 +19,14 @@ subscriptions model =
 -- MAIN
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, fetchProducts )
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( initialModel, (fetchProducts flags.accessKey) )
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
+    programWithFlags
         { init = init
         , view = view
         , update = update

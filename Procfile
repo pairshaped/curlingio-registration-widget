@@ -1,2 +1,2 @@
 api: yarn api
-web: yarn dev
+web: elm-live src/Main.elm --port=3000 --output=build/app.js
