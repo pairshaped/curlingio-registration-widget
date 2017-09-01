@@ -16,8 +16,8 @@ fetchProducts accessKey =
 
 productsUrl : AccessKey -> String
 productsUrl accessKey =
-    -- "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
-    "http://localhost:4000/products"
+    -- "http://localhost:4000/products"
+    "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
 
 
 productsDecoder : Decode.Decoder (List Product)
