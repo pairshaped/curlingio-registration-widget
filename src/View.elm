@@ -12,7 +12,7 @@ import Styles exposing (..)
 
 view : Model -> Html Msg
 view model =
-    Element.root stylesheet <|
+    Element.layout stylesheet <|
         column Styles.Main
             [ padding 10, spacing 10 ]
             [ (Components.Filters.view model.filter)
