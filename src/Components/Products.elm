@@ -1,9 +1,9 @@
 module Components.Products exposing (view)
 
-import Element exposing (..)
-import Element.Attributes exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Types exposing (Msg, Product, Filter(..))
-import Styles exposing (..)
+import Styles
 
 
 filterProducts : List Product -> Filter -> List Product
@@ -25,7 +25,7 @@ filterProducts products filter =
             List.filter (\product -> product.registrationType == "general") products
 
 
-item : Product -> Element Styles variation Msg
+item : Product -> Html Msg
 item product =
     let
         description =
@@ -34,22 +34,25 @@ item product =
             else
                 product.description
     in
-        link ("https://curling.io/p/" ++ (toString product.id)) <|
-            column Styles.Product
-                []
-                [ row Styles.ProductHeader
-                    [ justify, padding 5, spacing 10 ]
-                    [ el None [] (text product.name)
-                    , el None [] (text product.price)
-                    ]
-                , el None [ padding 5 ] (text description)
+        a
+            [ style Styles.productContainer
+            , href ("https://curling.io/p/" ++ (toString product.id))
+            ]
+            [ strong
+                [ style Styles.productHeader ]
+                [ div [] [ (text product.name) ]
+                , div [] [ (text product.price) ]
                 ]
+            , div [ style Styles.productBody ] [ (text description) ]
+            ]
 
 
-view : List Product -> Filter -> Element Styles variation Msg
+view : List Product -> Filter -> Html Msg
 view products filter =
     let
         filteredProducts =
             (filterProducts products filter)
     in
-        column Styles.Products [ spacing 10 ] (List.map item filteredProducts)
+        div
+            [ style Styles.products ]
+            (List.map item filteredProducts)

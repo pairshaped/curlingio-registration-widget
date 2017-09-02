@@ -1,47 +1,57 @@
 module Styles exposing (..)
 
-import Color
-import Style exposing (..)
-import Style.Border as Border
-import Style.Color as Color
-import Style.Font as Font
+
+root : List ( String, String )
+root =
+    [ ( "display", "flex" )
+    , ( "flex-direction", "column" )
+    , ( "padding", "10px" )
+    , ( "margin", "10px" )
+    ]
 
 
-type Styles
-    = None
-    | Main
-    | Filters
-    | Filter
-    | Products
-    | Product
-    | ProductHeader
+filters : List ( String, String )
+filters =
+    [ ( "display", "flex" )
+    , ( "margin-bottom", "10px" )
+    ]
 
 
-stylesheet : StyleSheet Styles variation
-stylesheet =
-    Style.stylesheet
-        [ style None [] -- It's handy to have a blank style
-        , style Main
-            [ Color.text Color.darkCharcoal
-            , Color.background Color.white
-            ]
-        , style Filters
-            [ Color.text Color.darkCharcoal
-            , Color.background Color.white
-            , Color.border Color.gray
-            ]
-        , style Filter
-            [ Font.underline
-            , cursor "pointer"
-            ]
-        , style Products
-            []
-        , style Product
-            [ Border.all 1
-            , Color.border Color.lightGray
-            ]
-        , style ProductHeader
-            [ Color.background Color.lightGray
-            , Font.weight 600
-            ]
-        ]
+filter : List ( String, String )
+filter =
+    [ ( "margin-right", "10px" )
+    , ( "text-decoration", "underline" )
+    , ( "cursor", "pointer" )
+    ]
+
+
+products : List ( String, String )
+products =
+    []
+
+
+productContainer : List ( String, String )
+productContainer =
+    [ ( "display", "flex" )
+    , ( "flex-direction", "column" )
+    , ( "border", "1px solid #eee" )
+    , ( "text-decoration", "none" )
+    , ( "margin-bottom", "10px" )
+    ]
+
+
+productHeader : List ( String, String )
+productHeader =
+    [ ( "display", "flex" )
+    , ( "justify-content", "space-between" )
+    , ( "padding", "5px" )
+    , ( "background", "#eee" )
+    ]
+
+
+productBody : List ( String, String )
+productBody =
+    [ ( "padding", "5px" )
+    , ( "color", "#333" )
+    , ( "font-weight", "normal" )
+    ]
