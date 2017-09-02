@@ -33,6 +33,12 @@ item product =
                 "Click to purchase"
             else
                 product.description
+
+        price =
+            if product.price == "$0.00" then
+                ""
+            else
+                "Starting at " ++ product.price
     in
         a
             [ style Styles.productContainer
@@ -41,7 +47,7 @@ item product =
             [ strong
                 [ style Styles.productHeader ]
                 [ div [] [ (text product.name) ]
-                , div [] [ (text product.price) ]
+                , div [] [ (text price) ]
                 ]
             , div [ style Styles.productBody ] [ (text description) ]
             ]
