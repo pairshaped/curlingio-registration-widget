@@ -11,6 +11,7 @@
     "uglify-js": "^3.0.28"
   },
   "scripts": {
+    "start": "elm-live src/Main.elm --output=dist/products-widget.js",
     "api": "node test-api/index.js",
     "format": "prettier --no-semi --write \"{src,test-api}/**/*.{js,json}\"",
     "build": "elm-make src/Main.elm --output=dist/products-widget.js",
