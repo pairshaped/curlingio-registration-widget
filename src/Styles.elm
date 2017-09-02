@@ -5,8 +5,6 @@ root : List ( String, String )
 root =
     [ ( "display", "flex" )
     , ( "flex-direction", "column" )
-    , ( "padding", "10px" )
-    , ( "margin", "10px" )
     ]
 
 
