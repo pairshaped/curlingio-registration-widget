@@ -4,14 +4,15 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Types exposing (Msg(..), Filter(..), Product)
+import Helpers exposing (showFilter)
 import Styles
 
 
-view : Filter -> Html Msg
-view selected =
+view : List Product -> Filter -> Html Msg
+view products selected =
     let
         filters =
-            [ All, Bundles, Leagues, Competitions, Other ]
+            List.filter (showFilter products) [ All, Bundles, Leagues, Competitions, Other ]
     in
         div [ style Styles.filters ] (List.map (viewFilter selected) filters)
 

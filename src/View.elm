@@ -12,19 +12,13 @@ import Styles
 view : Model -> Html Msg
 view model =
     div [ style Styles.root ]
-        [ (Components.Filters.view model.filter)
-        , viewProducts model.products model.filter
+        [ resolveData model
         ]
 
 
-viewProducts : WebData (List Product) -> Filter -> Html Msg
-viewProducts response filter =
-    maybeList response filter
-
-
-maybeList : WebData (List Product) -> Filter -> Html Msg
-maybeList response filter =
-    case response of
+resolveData : Model -> Html Msg
+resolveData model =
+    case model.products of
         RemoteData.NotAsked ->
             text ""
 
@@ -32,7 +26,10 @@ maybeList response filter =
             text "Loading products..."
 
         RemoteData.Success products ->
-            Components.Products.view products filter
+            div []
+                [ Components.Filters.view products model.filter
+                , Components.Products.view products model.filter
+                ]
 
         RemoteData.Failure error ->
             text (toString error)
