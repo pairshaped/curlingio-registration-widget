@@ -39,10 +39,10 @@ item product =
                     ""
 
                 0 ->
-                    " - Sold Out"
+                    " (Sold Out)"
 
                 _ ->
-                    " - " ++ (toString product.available_quantity) ++ " available"
+                    " (" ++ (toString product.available_quantity) ++ " available)"
     in
         a
             [ style Styles.productContainer
