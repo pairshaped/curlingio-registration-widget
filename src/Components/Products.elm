@@ -32,6 +32,17 @@ item product =
                 ""
             else
                 "Starting at " ++ product.price
+
+        availableQuantity =
+            case product.available_quantity of
+                (-1) ->
+                    ""
+
+                0 ->
+                    " - Sold Out"
+
+                _ ->
+                    " - " ++ (toString product.available_quantity) ++ " available"
     in
         a
             [ style Styles.productContainer
@@ -39,8 +50,8 @@ item product =
             ]
             [ strong
                 [ style Styles.productHeader ]
-                [ div [] [ (text product.name) ]
-                , div [] [ (text price) ]
+                [ div [ style Styles.productName ] [ (text (product.name ++ availableQuantity)) ]
+                , div [ style Styles.productPrice ] [ (text price) ]
                 ]
             , div [ style Styles.productBody ] [ (text description) ]
             ]

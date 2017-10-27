@@ -2,7 +2,7 @@ module Rest exposing (..)
 
 import Http
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (decode, required)
+import Json.Decode.Pipeline exposing (decode, required, optional)
 import Types exposing (Msg(..), AccessKey, Product)
 import RemoteData
 
@@ -16,8 +16,11 @@ fetchProducts accessKey =
 
 productsUrl : AccessKey -> String
 productsUrl accessKey =
-    -- "http://localhost:4000/products"
-    "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
+    "http://localhost:4000/products"
+
+
+
+-- "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
 
 
 productsDecoder : Decode.Decoder (List Product)
@@ -33,3 +36,5 @@ productDecoder =
         |> required "price" Decode.string
         |> required "description" Decode.string
         |> required "registration_type" Decode.string
+        |> optional "quantity" Decode.int -1
+        |> optional "available_quantity" Decode.int -1

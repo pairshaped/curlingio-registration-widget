@@ -36,4 +36,6 @@ type alias Product =
     , price : String
     , description : String
     , registrationType : String
+    , quantity : Int
+    , available_quantity : Int
     }

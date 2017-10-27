@@ -47,6 +47,16 @@ productHeader =
     ]
 
 
+productName : List ( String, String )
+productName =
+    []
+
+
+productPrice : List ( String, String )
+productPrice =
+    []
+
+
 productBody : List ( String, String )
 productBody =
     [ ( "padding", "5px" )
