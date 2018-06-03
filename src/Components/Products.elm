@@ -46,7 +46,7 @@ item product =
     in
         a
             [ style Styles.productContainer
-            , href ("https://curling.io/p/" ++ (toString product.id))
+            , href ("https://legacy.curling.io/p/" ++ (toString product.id))
             ]
             [ strong
                 [ style Styles.productHeader ]

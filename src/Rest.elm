@@ -18,7 +18,7 @@ productsUrl : AccessKey -> String
 productsUrl accessKey =
     -- "http://localhost:4000/products"
     -- "http://localhost:3000/api/organizations/" ++ accessKey ++ "/products"
-    "https://curling.io/api/organizations/" ++ accessKey ++ "/products"
+    "https://legacy.curling.io/api/organizations/" ++ accessKey ++ "/products"
 
 
 productsDecoder : Decode.Decoder (List Product)
