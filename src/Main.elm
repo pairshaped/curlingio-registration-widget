@@ -1,10 +1,66 @@
-module Main exposing (..)
+module Main exposing (getItems, init, main, subscriptions, update)
 
-import Html exposing (programWithFlags)
-import Rest exposing (fetchProducts)
-import Types exposing (Flags, Msg, Model)
-import State exposing (initialModel, update)
+import Browser
+import Http
+import Types exposing (..)
 import View exposing (view)
+
+
+
+-- MAIN
+
+
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = view
+        }
+
+
+init : { host : String, section : String } -> ( Model, Cmd Msg )
+init flags =
+    ( { host = flags.host, section = flags.section, items = Loading }, getItems flags.host flags.section )
+
+
+
+-- UPDATE
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        GotItems result ->
+            case result of
+                Ok items ->
+                    ( { model | items = Success items }, Cmd.none )
+
+                Err err ->
+                    let
+                        errorMessage =
+                            case err of
+                                Http.BadUrl string ->
+                                    "Invalid URL used to fetch data: " ++ string
+
+                                Http.Timeout ->
+                                    "Network Timeout when trying to fetch data."
+
+                                Http.NetworkError ->
+                                    "Network Error when trying to fetch data."
+
+                                Http.BadStatus int ->
+                                    if List.member model.section [ "leagues", "competitions", "products" ] then
+                                        "Invalid response status from server"
+
+                                    else
+                                        "The section paramter passed is incorrect. \"" ++ model.section ++ "\" is not a valid section."
+
+                                Http.BadBody string ->
+                                    "Invalid response body from server: " ++ string
+                    in
+                    ( { model | items = Failure errorMessage }, Cmd.none )
+
 
 
 -- SUBSCRIPTIONS
@@ -16,19 +72,12 @@ subscriptions model =
 
 
 
--- MAIN
+-- HTTP
 
 
-init : Flags -> ( Model, Cmd Msg )
-init flags =
-    ( initialModel, (fetchProducts flags.accessKey) )
-
-
-main : Program Flags Model Msg
-main =
-    programWithFlags
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
+getItems : String -> String -> Cmd Msg
+getItems host section =
+    Http.get
+        { url = host ++ "/en/api/v1/" ++ section
+        , expect = Http.expectJson GotItems itemsDecoder
         }

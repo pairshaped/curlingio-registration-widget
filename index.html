@@ -1,10 +1,12 @@
-<body>
-  <div id="curlingio-products"></div>
-  <script src="dist/products-widget.js"></script>
-  <script>
-      Elm.Main.embed(
-        document.getElementById('curlingio-products'),
-        { accessKey: "FV7HeT0-f_M" }
-      )
-  </script>
-</body>
+<html>
+  <script src="elm.js"></script>
+  <body>
+    <div id="curlingio-registration-widget"></div>
+    <script>
+      var app = Elm.Main.init({
+        node: document.getElementById("curlingio-registration-widget"),
+        flags: { host: "http://canada.curling.local:3000", section: "competitions" }
+      })
+    </script>
+  </body>
+</html>

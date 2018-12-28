@@ -1,35 +1,58 @@
-module View exposing (..)
+module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import RemoteData exposing (WebData)
-import Types exposing (Msg, Model, Filter, Product)
-import Components.Filters
-import Components.Products
-import Styles
+import Html.Events exposing (..)
+import Types exposing (..)
 
 
 view : Model -> Html Msg
 view model =
-    div [ style Styles.root ]
-        [ resolveData model
+    div
+        [ style "display" "flex"
+        , style "flex-direction" "column"
         ]
+        [ viewItems model.items ]
 
 
-resolveData : Model -> Html Msg
-resolveData model =
-    case model.products of
-        RemoteData.NotAsked ->
-            text ""
+viewItems : Items -> Html Msg
+viewItems items =
+    case items of
+        Failure message ->
+            text message
 
-        RemoteData.Loading ->
-            text "Loading products..."
+        Loading ->
+            text "Loading..."
 
-        RemoteData.Success products ->
-            div []
-                [ Components.Filters.view products model.filter
-                , Components.Products.view products model.filter
-                ]
+        Success decodedItems ->
+            div [] (List.map viewItem decodedItems)
 
-        RemoteData.Failure error ->
-            text (toString error)
+
+viewItem : Item -> Html Msg
+viewItem item =
+    div
+        [ style "display" "flex"
+        , style "flex-direction" "column"
+        , style "margin-bottom" "10px"
+        ]
+        [ a
+            [ style "display" "flex"
+            , style "flex-direction" "row"
+            , style "text-decoration" "none"
+            , href item.url
+            , target "_blank"
+            ]
+            [ div
+                [ style "width" "500px" ]
+                [ text item.name ]
+            , div
+                [ style "width" "140px" ]
+                [ text item.price ]
+            ]
+        , div
+            []
+            [ text (Maybe.withDefault "" item.summary) ]
+        , div
+            [ style "display" "none" ]
+            [ text (Maybe.withDefault "" item.description) ]
+        ]
