@@ -5874,14 +5874,18 @@ var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
 		{body: elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: elm$core$Maybe$Nothing, tracker: elm$core$Maybe$Nothing, url: r.url});
 };
-var author$project$Main$getItems = elm$http$Http$get(
-	{
-		expect: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
-		url: 'http://canada.curling.local:3000/en/api/v1/competitions'
-	});
+var author$project$Main$getItems = function (section) {
+	return elm$http$Http$get(
+		{
+			expect: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
+			url: 'http://canada.curling.local:3000/en/api/v1/' + section
+		});
+};
 var author$project$Types$Loading = {$: 'Loading'};
-var author$project$Main$init = function (_n0) {
-	return _Utils_Tuple2(author$project$Types$Loading, author$project$Main$getItems);
+var author$project$Main$init = function (flags) {
+	return _Utils_Tuple2(
+		{items: author$project$Types$Loading, section: flags.section},
+		author$project$Main$getItems(flags.section));
 };
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
@@ -5894,6 +5898,36 @@ var author$project$Types$Failure = function (a) {
 var author$project$Types$Success = function (a) {
 	return {$: 'Success', a: a};
 };
+var elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
+			xs);
+	});
 var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$update = F2(
@@ -5902,29 +5936,41 @@ var author$project$Main$update = F2(
 		if (result.$ === 'Ok') {
 			var items = result.a;
 			return _Utils_Tuple2(
-				author$project$Types$Success(items),
+				_Utils_update(
+					model,
+					{
+						items: author$project$Types$Success(items)
+					}),
 				elm$core$Platform$Cmd$none);
 		} else {
 			var err = result.a;
-			var message = function () {
+			var errorMessage = function () {
 				switch (err.$) {
 					case 'BadUrl':
 						var string = err.a;
-						return 'Bad URL: ' + string;
+						return 'Invalid URL used to fetch data: ' + string;
 					case 'Timeout':
-						return 'Timeout';
+						return 'Network Timeout when trying to fetch data.';
 					case 'NetworkError':
-						return 'Network Error';
+						return 'Network Error when trying to fetch data.';
 					case 'BadStatus':
 						var _int = err.a;
-						return 'Bad Status';
+						return A2(
+							elm$core$List$member,
+							model.section,
+							_List_fromArray(
+								['leagues', 'competitions', 'products'])) ? 'Invalid response status from server' : ('The section paramter passed is incorrect. \"' + (model.section + '\" is not a valid section.'));
 					default:
 						var string = err.a;
-						return 'Bad Body: ' + string;
+						return 'Invalid response body from server: ' + string;
 				}
 			}();
 			return _Utils_Tuple2(
-				author$project$Types$Failure(message),
+				_Utils_update(
+					model,
+					{
+						items: author$project$Types$Failure(errorMessage)
+					}),
 				elm$core$Platform$Cmd$none);
 		}
 	});
@@ -5962,70 +6008,62 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			elm$json$Json$Encode$string(string));
 	});
-var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
 var elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
+var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
 var author$project$View$viewItem = function (item) {
 	return A2(
 		elm$html$Html$div,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$class('item')
+				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
+				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+				A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px')
 			]),
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$div,
+				elm$html$Html$a,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$class('item-link-wrapper')
+						A2(elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2(elm$html$Html$Attributes$style, 'flex-direction', 'row'),
+						A2(elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+						elm$html$Html$Attributes$href(item.url),
+						elm$html$Html$Attributes$target('_blank')
 					]),
 				_List_fromArray(
 					[
 						A2(
-						elm$html$Html$a,
+						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('item-link'),
-								elm$html$Html$Attributes$href(item.url),
-								elm$html$Html$Attributes$target('_blank')
+								A2(elm$html$Html$Attributes$style, 'width', '500px')
 							]),
 						_List_fromArray(
 							[
 								elm$html$Html$text(item.name)
+							])),
+						A2(
+						elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2(elm$html$Html$Attributes$style, 'width', '140px')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(item.price)
 							]))
 					])),
 				A2(
 				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('item-name')
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(item.name)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('item-price')
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(item.price)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('item-summary')
-					]),
+				_List_Nil,
 				_List_fromArray(
 					[
 						elm$html$Html$text(
@@ -6035,7 +6073,7 @@ var author$project$View$viewItem = function (item) {
 				elm$html$Html$div,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$class('item-description')
+						A2(elm$html$Html$Attributes$style, 'display', 'none')
 					]),
 				_List_fromArray(
 					[
@@ -6058,22 +6096,19 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
-var author$project$View$viewItems = function (model) {
-	switch (model.$) {
+var author$project$View$viewItems = function (items) {
+	switch (items.$) {
 		case 'Failure':
-			var message = model.a;
+			var message = items.a;
 			return elm$html$Html$text(message);
 		case 'Loading':
 			return elm$html$Html$text('Loading...');
 		default:
-			var items = model.a;
+			var decodedItems = items.a;
 			return A2(
 				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('items')
-					]),
-				A2(elm$core$List$map, author$project$View$viewItem, items));
+				_List_Nil,
+				A2(elm$core$List$map, author$project$View$viewItem, decodedItems));
 	}
 };
 var author$project$View$view = function (model) {
@@ -6081,11 +6116,12 @@ var author$project$View$view = function (model) {
 		elm$html$Html$div,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$class('container')
+				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
+				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column')
 			]),
 		_List_fromArray(
 			[
-				author$project$View$viewItems(model)
+				author$project$View$viewItems(model.items)
 			]));
 };
 var elm$browser$Browser$External = function (a) {
@@ -6290,7 +6326,14 @@ var elm$url$Url$fromString = function (str) {
 		A2(elm$core$String$dropLeft, 8, str)) : elm$core$Maybe$Nothing);
 };
 var elm$browser$Browser$element = _Browser_element;
+var elm$json$Json$Decode$andThen = _Json_andThen;
 var author$project$Main$main = elm$browser$Browser$element(
 	{init: author$project$Main$init, subscriptions: author$project$Main$subscriptions, update: author$project$Main$update, view: author$project$View$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
-	elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
+	A2(
+		elm$json$Json$Decode$andThen,
+		function (section) {
+			return elm$json$Json$Decode$succeed(
+				{section: section});
+		},
+		A2(elm$json$Json$Decode$field, 'section', elm$json$Json$Decode$string)))(0)}});}(this));

@@ -19,9 +19,9 @@ main =
         }
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
-    ( Loading, getItems )
+init : { section : String } -> ( Model, Cmd Msg )
+init flags =
+    ( { section = flags.section, items = Loading }, getItems flags.section )
 
 
 
@@ -34,28 +34,32 @@ update msg model =
         GotItems result ->
             case result of
                 Ok items ->
-                    ( Success items, Cmd.none )
+                    ( { model | items = Success items }, Cmd.none )
 
                 Err err ->
                     let
-                        message =
+                        errorMessage =
                             case err of
                                 Http.BadUrl string ->
-                                    "Bad URL: " ++ string
+                                    "Invalid URL used to fetch data: " ++ string
 
                                 Http.Timeout ->
-                                    "Timeout"
+                                    "Network Timeout when trying to fetch data."
 
                                 Http.NetworkError ->
-                                    "Network Error"
+                                    "Network Error when trying to fetch data."
 
                                 Http.BadStatus int ->
-                                    "Bad Status"
+                                    if List.member model.section [ "leagues", "competitions", "products" ] then
+                                        "Invalid response status from server"
+
+                                    else
+                                        "The section paramter passed is incorrect. \"" ++ model.section ++ "\" is not a valid section."
 
                                 Http.BadBody string ->
-                                    "Bad Body: " ++ string
+                                    "Invalid response body from server: " ++ string
                     in
-                    ( Failure message, Cmd.none )
+                    ( { model | items = Failure errorMessage }, Cmd.none )
 
 
 
@@ -71,9 +75,9 @@ subscriptions model =
 -- HTTP
 
 
-getItems : Cmd Msg
-getItems =
+getItems : String -> Cmd Msg
+getItems section =
     Http.get
-        { url = "http://canada.curling.local:3000/en/api/v1/competitions"
+        { url = "http://canada.curling.local:3000/en/api/v1/" ++ section
         , expect = Http.expectJson GotItems itemsDecoder
         }

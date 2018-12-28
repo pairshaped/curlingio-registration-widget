@@ -1,11 +1,15 @@
-module Styles exposing (container, item, itemBody, itemName, itemPrice, items)
+module Styles exposing (item, itemBody, itemName, itemPrice, items)
+
+import Html.Attributes exposing (style)
 
 
-container : List ( String, String )
-container =
-    [ ( "display", "flex" )
-    , ( "flex-direction", "column" )
-    ]
+
+-- container : String -> String
+-- container =
+--     [ style "display" "flex"
+--     , style "flex-direction" "column"
+--     ]
+--
 
 
 items : List ( String, String )

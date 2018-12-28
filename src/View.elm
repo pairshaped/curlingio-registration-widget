@@ -3,41 +3,57 @@ module View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Styles exposing (..)
+import Styles
 import Types exposing (..)
 
 
 view : Model -> Html Msg
 view model =
-    div [ class "container" ]
-        [ viewItems model ]
+    div
+        [ style "display" "flex"
+        , style "flex-direction" "column"
+        ]
+        [ viewItems model.items ]
 
 
-viewItems : Model -> Html Msg
-viewItems model =
-    case model of
+viewItems : Items -> Html Msg
+viewItems items =
+    case items of
         Failure message ->
             text message
 
         Loading ->
             text "Loading..."
 
-        Success items ->
-            div [ class "items" ] (List.map viewItem items)
+        Success decodedItems ->
+            div [] (List.map viewItem decodedItems)
 
 
 viewItem : Item -> Html Msg
 viewItem item =
-    div [ class "item" ]
-        [ div [ class "item-link-wrapper" ]
-            [ a
-                [ class "item-link", href item.url, target "_blank" ]
+    div
+        [ style "display" "flex"
+        , style "flex-direction" "column"
+        , style "margin-bottom" "10px"
+        ]
+        [ a
+            [ style "display" "flex"
+            , style "flex-direction" "row"
+            , style "text-decoration" "none"
+            , href item.url
+            , target "_blank"
+            ]
+            [ div
+                [ style "width" "500px" ]
                 [ text item.name ]
+            , div
+                [ style "width" "140px" ]
+                [ text item.price ]
             ]
         , div
-            [ class "item-name" ]
-            [ text item.name ]
-        , div [ class "item-price" ] [ text item.price ]
-        , div [ class "item-summary" ] [ text (Maybe.withDefault "" item.summary) ]
-        , div [ class "item-description" ] [ text (Maybe.withDefault "" item.description) ]
+            []
+            [ text (Maybe.withDefault "" item.summary) ]
+        , div
+            [ style "display" "none" ]
+            [ text (Maybe.withDefault "" item.description) ]
         ]

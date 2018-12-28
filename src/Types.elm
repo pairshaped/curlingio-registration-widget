@@ -1,4 +1,4 @@
-module Types exposing (Item, Model(..), Msg(..), itemDecoder, itemsDecoder)
+module Types exposing (Item, Items(..), Model, Msg(..), itemDecoder, itemsDecoder)
 
 import Http
 import Json.Decode exposing (Decoder, field, list, maybe, string)
@@ -6,6 +6,12 @@ import Json.Decode exposing (Decoder, field, list, maybe, string)
 
 type Msg
     = GotItems (Result Http.Error (List Item))
+
+
+type Items
+    = Failure String
+    | Loading
+    | Success (List Item)
 
 
 type alias Item =
@@ -17,10 +23,10 @@ type alias Item =
     }
 
 
-type Model
-    = Failure String
-    | Loading
-    | Success (List Item)
+type alias Model =
+    { section : String
+    , items : Items
+    }
 
 
 itemsDecoder : Decoder (List Item)
