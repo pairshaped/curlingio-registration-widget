@@ -4485,11 +4485,10 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$Loading = {$: 'Loading'};
-var author$project$Main$GotItems = function (a) {
+var author$project$Types$GotItems = function (a) {
 	return {$: 'GotItems', a: a};
 };
-var author$project$Main$Item = F5(
+var author$project$Types$Item = F5(
 	function (name, summary, description, price, url) {
 		return {description: description, name: name, price: price, summary: summary, url: url};
 	});
@@ -4982,9 +4981,9 @@ var elm$json$Json$Decode$maybe = function (decoder) {
 			]));
 };
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Main$itemDecoder = A6(
+var author$project$Types$itemDecoder = A6(
 	elm$json$Json$Decode$map5,
-	author$project$Main$Item,
+	author$project$Types$Item,
 	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
 	elm$json$Json$Decode$maybe(
 		A2(elm$json$Json$Decode$field, 'summary', elm$json$Json$Decode$string)),
@@ -4993,7 +4992,7 @@ var author$project$Main$itemDecoder = A6(
 	A2(elm$json$Json$Decode$field, 'price', elm$json$Json$Decode$string),
 	A2(elm$json$Json$Decode$field, 'url', elm$json$Json$Decode$string));
 var elm$json$Json$Decode$list = _Json_decodeList;
-var author$project$Main$itemsDecoder = elm$json$Json$Decode$list(author$project$Main$itemDecoder);
+var author$project$Types$itemsDecoder = elm$json$Json$Decode$list(author$project$Types$itemDecoder);
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -5877,21 +5876,22 @@ var elm$http$Http$get = function (r) {
 };
 var author$project$Main$getItems = elm$http$Http$get(
 	{
-		expect: A2(elm$http$Http$expectJson, author$project$Main$GotItems, author$project$Main$itemsDecoder),
+		expect: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
 		url: 'http://canada.curling.local:3000/en/api/v1/competitions'
 	});
+var author$project$Types$Loading = {$: 'Loading'};
 var author$project$Main$init = function (_n0) {
-	return _Utils_Tuple2(author$project$Main$Loading, author$project$Main$getItems);
+	return _Utils_Tuple2(author$project$Types$Loading, author$project$Main$getItems);
 };
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var author$project$Main$subscriptions = function (model) {
 	return elm$core$Platform$Sub$none;
 };
-var author$project$Main$Failure = function (a) {
+var author$project$Types$Failure = function (a) {
 	return {$: 'Failure', a: a};
 };
-var author$project$Main$Success = function (a) {
+var author$project$Types$Success = function (a) {
 	return {$: 'Success', a: a};
 };
 var elm$core$Platform$Cmd$batch = _Platform_batch;
@@ -5902,7 +5902,7 @@ var author$project$Main$update = F2(
 		if (result.$ === 'Ok') {
 			var items = result.a;
 			return _Utils_Tuple2(
-				author$project$Main$Success(items),
+				author$project$Types$Success(items),
 				elm$core$Platform$Cmd$none);
 		} else {
 			var err = result.a;
@@ -5910,21 +5910,21 @@ var author$project$Main$update = F2(
 				switch (err.$) {
 					case 'BadUrl':
 						var string = err.a;
-						return 'BadUrl ' + string;
+						return 'Bad URL: ' + string;
 					case 'Timeout':
 						return 'Timeout';
 					case 'NetworkError':
-						return 'NetworkError';
+						return 'Network Error';
 					case 'BadStatus':
 						var _int = err.a;
-						return 'BadStatus';
+						return 'Bad Status';
 					default:
 						var string = err.a;
-						return 'BadBody ' + string;
+						return 'Bad Body: ' + string;
 				}
 			}();
 			return _Utils_Tuple2(
-				author$project$Main$Failure(message),
+				author$project$Types$Failure(message),
 				elm$core$Platform$Cmd$none);
 		}
 	});
@@ -5952,7 +5952,6 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 };
 var elm$html$Html$a = _VirtualDom_node('a');
 var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$strong = _VirtualDom_node('strong');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
 var elm$json$Json$Encode$string = _Json_wrap;
@@ -5963,6 +5962,7 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			elm$json$Json$Encode$string(string));
 	});
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
 var elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
@@ -5970,43 +5970,77 @@ var elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
-var author$project$Main$viewItem = function (item) {
+var author$project$View$viewItem = function (item) {
 	return A2(
-		elm$html$Html$a,
+		elm$html$Html$div,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$href(item.url),
-				elm$html$Html$Attributes$target('_blank')
+				elm$html$Html$Attributes$class('item')
 			]),
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$strong,
-				_List_Nil,
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('item-link-wrapper')
+					]),
 				_List_fromArray(
 					[
 						A2(
-						elm$html$Html$div,
-						_List_Nil,
+						elm$html$Html$a,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('item-link'),
+								elm$html$Html$Attributes$href(item.url),
+								elm$html$Html$Attributes$target('_blank')
+							]),
 						_List_fromArray(
 							[
 								elm$html$Html$text(item.name)
-							])),
-						A2(
-						elm$html$Html$div,
-						_List_Nil,
-						_List_fromArray(
-							[
-								elm$html$Html$text(item.price)
 							]))
 					])),
 				A2(
 				elm$html$Html$div,
-				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('item-name')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(item.name)
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('item-price')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(item.price)
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('item-summary')
+					]),
 				_List_fromArray(
 					[
 						elm$html$Html$text(
 						A2(elm$core$Maybe$withDefault, '', item.summary))
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('item-description')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						A2(elm$core$Maybe$withDefault, '', item.description))
 					]))
 			]));
 };
@@ -6024,7 +6058,7 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
-var author$project$Main$viewItems = function (model) {
+var author$project$View$viewItems = function (model) {
 	switch (model.$) {
 		case 'Failure':
 			var message = model.a;
@@ -6035,17 +6069,23 @@ var author$project$Main$viewItems = function (model) {
 			var items = model.a;
 			return A2(
 				elm$html$Html$div,
-				_List_Nil,
-				A2(elm$core$List$map, author$project$Main$viewItem, items));
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('items')
+					]),
+				A2(elm$core$List$map, author$project$View$viewItem, items));
 	}
 };
-var author$project$Main$view = function (model) {
+var author$project$View$view = function (model) {
 	return A2(
 		elm$html$Html$div,
-		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$Main$viewItems(model)
+				elm$html$Html$Attributes$class('container')
+			]),
+		_List_fromArray(
+			[
+				author$project$View$viewItems(model)
 			]));
 };
 var elm$browser$Browser$External = function (a) {
@@ -6251,6 +6291,6 @@ var elm$url$Url$fromString = function (str) {
 };
 var elm$browser$Browser$element = _Browser_element;
 var author$project$Main$main = elm$browser$Browser$element(
-	{init: author$project$Main$init, subscriptions: author$project$Main$subscriptions, update: author$project$Main$update, view: author$project$Main$view});
+	{init: author$project$Main$init, subscriptions: author$project$Main$subscriptions, update: author$project$Main$update, view: author$project$View$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));

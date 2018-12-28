@@ -1,11 +1,9 @@
-module Main exposing (Item, Model(..), Msg(..), getItems, init, itemDecoder, itemsDecoder, main, subscriptions, update, view, viewItem, viewItems)
+module Main exposing (getItems, init, main, subscriptions, update)
 
 import Browser
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Http
-import Json.Decode exposing (Decoder, field, list, maybe, string)
+import Types exposing (..)
+import View exposing (view)
 
 
 
@@ -19,29 +17,6 @@ main =
         , subscriptions = subscriptions
         , view = view
         }
-
-
-
--- MODEL
-
-
-type Msg
-    = GotItems (Result Http.Error (List Item))
-
-
-type alias Item =
-    { name : String
-    , summary : Maybe String
-    , description : Maybe String
-    , price : String
-    , url : String
-    }
-
-
-type Model
-    = Failure String
-    | Loading
-    | Success (List Item)
 
 
 init : () -> ( Model, Cmd Msg )
@@ -66,19 +41,19 @@ update msg model =
                         message =
                             case err of
                                 Http.BadUrl string ->
-                                    "BadUrl " ++ string
+                                    "Bad URL: " ++ string
 
                                 Http.Timeout ->
                                     "Timeout"
 
                                 Http.NetworkError ->
-                                    "NetworkError"
+                                    "Network Error"
 
                                 Http.BadStatus int ->
-                                    "BadStatus"
+                                    "Bad Status"
 
                                 Http.BadBody string ->
-                                    "BadBody " ++ string
+                                    "Bad Body: " ++ string
                     in
                     ( Failure message, Cmd.none )
 
@@ -93,42 +68,6 @@ subscriptions model =
 
 
 
--- VIEW
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ viewItems model ]
-
-
-viewItems : Model -> Html Msg
-viewItems model =
-    case model of
-        Failure message ->
-            text message
-
-        Loading ->
-            text "Loading..."
-
-        Success items ->
-            div [] (List.map viewItem items)
-
-
-viewItem : Item -> Html Msg
-viewItem item =
-    a
-        [ href item.url, target "_blank" ]
-        [ strong
-            []
-            [ div [] [ text item.name ]
-            , div [] [ text item.price ]
-            ]
-        , div [] [ text (Maybe.withDefault "" item.summary) ]
-        ]
-
-
-
 -- HTTP
 
 
@@ -138,18 +77,3 @@ getItems =
         { url = "http://canada.curling.local:3000/en/api/v1/competitions"
         , expect = Http.expectJson GotItems itemsDecoder
         }
-
-
-itemsDecoder : Decoder (List Item)
-itemsDecoder =
-    list itemDecoder
-
-
-itemDecoder : Decoder Item
-itemDecoder =
-    Json.Decode.map5 Item
-        (field "name" string)
-        (maybe (field "summary" string))
-        (maybe (field "description" string))
-        (field "price" string)
-        (field "url" string)
