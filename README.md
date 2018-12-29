@@ -4,4 +4,4 @@
 
 ## Production
 
-`./optimize.sh`
+`./prod.sh`
