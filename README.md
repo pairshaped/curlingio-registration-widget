@@ -36,4 +36,4 @@ All you need to do to deploy updates is run the prod script, commit the changes,
 
 ## Source
 
-https://github.com/pairshaped/curlingio-registration-widget
+<https://github.com/pairshaped/curlingio-registration-widget>
