@@ -19,9 +19,9 @@ main =
         }
 
 
-init : { host : String, section : String } -> ( Model, Cmd Msg )
+init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { host = flags.host, section = flags.section, items = Loading }, getItems flags.host flags.section )
+    ( { flags = flags, items = Loading }, getItems flags.host flags.section )
 
 
 
@@ -50,11 +50,11 @@ update msg model =
                                     "Network Error when trying to fetch data."
 
                                 Http.BadStatus int ->
-                                    if List.member model.section [ "leagues", "competitions", "products" ] then
+                                    if List.member model.flags.section [ "leagues", "competitions", "products" ] then
                                         "Invalid response status from server"
 
                                     else
-                                        "The section paramter passed is incorrect. \"" ++ model.section ++ "\" is not a valid section."
+                                        "The section paramter passed is incorrect. \"" ++ model.flags.section ++ "\" is not a valid section."
 
                                 Http.BadBody string ->
                                     "Invalid response body from server: " ++ string

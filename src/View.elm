@@ -39,6 +39,7 @@ viewItem item =
             [ style "display" "flex"
             , style "flex-direction" "row"
             , style "text-decoration" "none"
+            , style "padding" "5px"
             , href item.url
             , target "_blank"
             ]
@@ -50,7 +51,9 @@ viewItem item =
                 [ text item.price ]
             ]
         , div
-            []
+            [ style "padding" "5px"
+            , style "color" "#333"
+            ]
             [ text (Maybe.withDefault "" item.summary) ]
         , div
             [ style "display" "none" ]
