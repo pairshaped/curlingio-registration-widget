@@ -1,5 +1,3 @@
-# Curling I/O Registration Widgets
-
 ## Using the Widgets
 
 To embed a widget in one of your pages, you simple copy and paste the javascript snippet below. There are two parameters that will need to be customized:
