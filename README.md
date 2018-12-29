@@ -33,3 +33,7 @@ To compile, optimize, and minify for production:
 The widget script is hosted by this Github repo itself from the master branch.
 
 All you need to do to deploy updates is run the prod script, commit the changes, and push to master.
+
+## Source
+
+https://github.com/pairshaped/curlingio-registration-widget
