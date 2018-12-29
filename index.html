@@ -1,12 +1,15 @@
 <html>
-  <script src="elm.js"></script>
   <body>
-    <div id="curlingio-registration-widget"></div>
-    <script>
-      var app = Elm.Main.init({
-        node: document.getElementById("curlingio-registration-widget"),
-        flags: { host: "http://canada.curling.local:3000", section: "competitions" }
-      })
-    </script>
+    <h2>To include this widget</h2>
+    <p>For your leagues, just add the following snippet to your page(s), replacing "club-domain" with the domain we've assigned to you, and "leagues" with the section you want to display, from "leagues", "competitions", or "products".</p>
+    <pre>
+      &lt;div id="curlingio-registration-widget"&gt;&lt;/div&gt;
+      &lt;script&gt;
+        var app = Elm.Main.init({
+          node: document.getElementById("curlingio-registration-widget"),
+          flags: { host: "https://club-domain.curling.io", section: "leagues" }
+        })
+      &lt;/script&gt;
+    </pre>
   </body>
 </html>
