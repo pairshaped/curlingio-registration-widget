@@ -78,6 +78,6 @@ subscriptions model =
 getItems : String -> String -> Cmd Msg
 getItems host section =
     Http.get
-        { url = host ++ "/en/api/v1/" ++ section
+        { url = host ++ "/" ++ section ++ ".json"
         , expect = Http.expectJson GotItems itemsDecoder
         }

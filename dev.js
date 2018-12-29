@@ -5879,7 +5879,7 @@ var author$project$Main$getItems = F2(
 		return elm$http$Http$get(
 			{
 				expect: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
-				url: host + ('/en/api/v1/' + section)
+				url: host + ('/' + (section + '.json'))
 			});
 	});
 var author$project$Types$Loading = {$: 'Loading'};
