@@ -6,6 +6,7 @@ import Json.Decode exposing (Decoder, field, list, maybe, string)
 
 type Msg
     = GotItems (Result Http.Error (List Item))
+    | ChangeFilter String
 
 
 type alias Flags =
@@ -31,6 +32,7 @@ type alias Item =
 
 type alias Model =
     { flags : Flags
+    , filter : String
     , items : Items
     }
 

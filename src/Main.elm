@@ -21,7 +21,7 @@ main =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { flags = flags, items = Loading }, getItems flags.host flags.section )
+    ( { flags = flags, filter = "", items = Loading }, getItems flags.host flags.section )
 
 
 
@@ -31,6 +31,9 @@ init flags =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ChangeFilter filter ->
+            ( { model | filter = filter }, Cmd.none )
+
         GotItems result ->
             case result of
                 Ok items ->

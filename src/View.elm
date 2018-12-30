@@ -12,12 +12,43 @@ view model =
         [ style "display" "flex"
         , style "flex-direction" "column"
         ]
-        [ viewItems model.items ]
+        [ viewItems model
+        ]
 
 
-viewItems : Items -> Html Msg
-viewItems items =
-    case items of
+viewFilter : Model -> Html Msg
+viewFilter model =
+    div []
+        [ input
+            [ placeholder "Type to filter results"
+            , value model.filter
+            , onInput ChangeFilter
+            , style "padding" "5px"
+            , style "min-width" "200px"
+            , style "width" "40%"
+            , style "margin-bottom" "10px"
+            ]
+            []
+        ]
+
+
+filteredItems : List Item -> String -> List Item
+filteredItems items filter =
+    case filter of
+        "" ->
+            items
+
+        _ ->
+            let
+                matches item =
+                    String.contains (String.toUpper filter) (String.toUpper (String.append item.name (Maybe.withDefault "" item.summary)))
+            in
+            List.filter matches items
+
+
+viewItems : Model -> Html Msg
+viewItems model =
+    case model.items of
         Failure message ->
             text message
 
@@ -25,7 +56,10 @@ viewItems items =
             text "Loading..."
 
         Success decodedItems ->
-            div [] (List.map viewItem decodedItems)
+            div []
+                [ viewFilter model
+                , div [] (List.map viewItem (filteredItems decodedItems model.filter))
+                ]
 
 
 viewItem : Item -> Html Msg
@@ -44,10 +78,14 @@ viewItem item =
             , target "_blank"
             ]
             [ div
-                [ style "width" "500px" ]
+                [ style "min-width" "500px"
+                , style "width" "80%"
+                ]
                 [ text item.name ]
             , div
-                [ style "width" "140px" ]
+                [ style "min-width" "140px"
+                , style "width" "20%"
+                ]
                 [ text item.price ]
             ]
         , div
