@@ -6051,6 +6051,7 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			elm$json$Json$Encode$string(string));
 	});
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
 var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
@@ -6103,7 +6104,8 @@ var author$project$View$viewFilter = function (model) {
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
 						A2(elm$html$Html$Attributes$style, 'min-width', '200px'),
 						A2(elm$html$Html$Attributes$style, 'width', '40%'),
-						A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px')
+						A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px'),
+						elm$html$Html$Attributes$class('curlingio-registration_search-box')
 					]),
 				_List_Nil)
 			]));
@@ -6125,7 +6127,8 @@ var author$project$View$viewItem = function (item) {
 			[
 				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
 				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-				A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px')
+				A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px'),
+				elm$html$Html$Attributes$class('curlingio-registration_item')
 			]),
 		_List_fromArray(
 			[
@@ -6137,6 +6140,7 @@ var author$project$View$viewItem = function (item) {
 						A2(elm$html$Html$Attributes$style, 'flex-direction', 'row'),
 						A2(elm$html$Html$Attributes$style, 'text-decoration', 'none'),
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
+						elm$html$Html$Attributes$class('curlingio-registration_item-link'),
 						elm$html$Html$Attributes$href(item.du),
 						elm$html$Html$Attributes$target('_blank')
 					]),
@@ -6147,7 +6151,8 @@ var author$project$View$viewItem = function (item) {
 						_List_fromArray(
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '500px'),
-								A2(elm$html$Html$Attributes$style, 'width', '80%')
+								A2(elm$html$Html$Attributes$style, 'width', '80%'),
+								elm$html$Html$Attributes$class('curlingio-registration_item-name')
 							]),
 						_List_fromArray(
 							[
@@ -6158,7 +6163,8 @@ var author$project$View$viewItem = function (item) {
 						_List_fromArray(
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
-								A2(elm$html$Html$Attributes$style, 'width', '20%')
+								A2(elm$html$Html$Attributes$style, 'width', '20%'),
+								elm$html$Html$Attributes$class('curlingio-registration_item-price')
 							]),
 						_List_fromArray(
 							[
@@ -6170,7 +6176,8 @@ var author$project$View$viewItem = function (item) {
 				_List_fromArray(
 					[
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
-						A2(elm$html$Html$Attributes$style, 'color', '#333')
+						A2(elm$html$Html$Attributes$style, 'color', '#333'),
+						elm$html$Html$Attributes$class('curlingio-registration_item-summary')
 					]),
 				_List_fromArray(
 					[
@@ -6181,7 +6188,8 @@ var author$project$View$viewItem = function (item) {
 				elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2(elm$html$Html$Attributes$style, 'display', 'none')
+						A2(elm$html$Html$Attributes$style, 'display', 'none'),
+						elm$html$Html$Attributes$class('curlingio-registration_item-description')
 					]),
 				_List_fromArray(
 					[
@@ -6189,6 +6197,13 @@ var author$project$View$viewItem = function (item) {
 						A2(elm$core$Maybe$withDefault, '', item.ck))
 					]))
 			]));
+};
+var elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
 };
 var elm$core$List$map = F2(
 	function (f, xs) {
@@ -6204,6 +6219,7 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var elm$html$Html$p = _VirtualDom_node('p');
 var author$project$View$viewItems = function (model) {
 	var _n0 = model.aL;
 	switch (_n0.$) {
@@ -6214,7 +6230,31 @@ var author$project$View$viewItems = function (model) {
 			return elm$html$Html$text('Loading...');
 		default:
 			var decodedItems = _n0.a;
-			return A2(
+			var items = A2(author$project$View$filteredItems, decodedItems, model.a6);
+			return elm$core$List$isEmpty(items) ? A2(
+				elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						author$project$View$viewFilter(model),
+						A2(
+						elm$html$Html$p,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('curlingio-registration_no-results')
+							]),
+						_List_fromArray(
+							[
+								function () {
+								var _n1 = model.a6;
+								if (_n1 === '') {
+									return elm$html$Html$text('There\'s nothing available right now.');
+								} else {
+									return elm$html$Html$text('There are no results matching your search.');
+								}
+							}()
+							]))
+					])) : A2(
 				elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
@@ -6222,11 +6262,11 @@ var author$project$View$viewItems = function (model) {
 						author$project$View$viewFilter(model),
 						A2(
 						elm$html$Html$div,
-						_List_Nil,
-						A2(
-							elm$core$List$map,
-							author$project$View$viewItem,
-							A2(author$project$View$filteredItems, decodedItems, model.a6)))
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('curlingio-registration_results')
+							]),
+						A2(elm$core$List$map, author$project$View$viewItem, items))
 					]));
 	}
 };
@@ -6236,7 +6276,8 @@ var author$project$View$view = function (model) {
 		_List_fromArray(
 			[
 				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
-				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column')
+				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+				elm$html$Html$Attributes$class('curlingio-registration_container')
 			]),
 		_List_fromArray(
 			[
