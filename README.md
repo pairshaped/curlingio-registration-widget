@@ -9,7 +9,7 @@ To embed a widget in one of your pages, you simple copy and paste the javascript
 <script src="https://pairshaped.github.io/curlingio-registration-widget/prod.min.js"></script>
 <div id="curlingio-leagues"></div>
 <script>
-  var app = Elm.Main.init({
+  Elm.Main.init({
     node: document.getElementById("curlingio-leagues"),
     flags: { host: "https://club-domain.curling.io", section: "leagues" }
   })
