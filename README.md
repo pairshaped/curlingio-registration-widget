@@ -26,6 +26,10 @@ This will open up the `dev.html` screen using elm-live.
 
 ## Deployment
 
+First install uglify-js if you don't already have it:
+
+`npm install -g uglify-js`
+
 To compile, optimize, and minify for production:
 
 `./prod.sh`

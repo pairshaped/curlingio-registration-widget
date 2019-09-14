@@ -11,6 +11,7 @@ view model =
     div
         [ style "display" "flex"
         , style "flex-direction" "column"
+        , class "curlingio-container"
         ]
         [ viewItems model
         ]
@@ -18,7 +19,7 @@ view model =
 
 viewFilter : Model -> Html Msg
 viewFilter model =
-    div []
+    div [ class "curlingio-filter-container" ]
         [ input
             [ placeholder "Type to filter results"
             , value model.filter
@@ -27,6 +28,7 @@ viewFilter model =
             , style "min-width" "200px"
             , style "width" "40%"
             , style "margin-bottom" "10px"
+            , class "curlingio-filter-input"
             ]
             []
         ]
@@ -68,32 +70,53 @@ viewItem item =
         [ style "display" "flex"
         , style "flex-direction" "column"
         , style "margin-bottom" "10px"
+        , class "curlingio-item-container"
         ]
-        [ a
+        [ div
             [ style "display" "flex"
             , style "flex-direction" "row"
             , style "text-decoration" "none"
             , style "padding" "5px"
-            , href item.url
-            , target "_blank"
+            , class "curlingio-item-top"
             ]
-            [ div
+            [ a
                 [ style "min-width" "500px"
-                , style "width" "80%"
+                , class "curlingio-item-name"
+                , href item.url
+                , target "_blank"
                 ]
                 [ text item.name ]
             , div
-                [ style "min-width" "140px"
-                , style "width" "20%"
+                [ style "min-width" "100px"
+                , style "text-align" "right"
+                , class "curlingio-item-price"
                 ]
                 [ text item.price ]
+            , a
+                [ style "min-width" "100px"
+                , style "text-align" "right"
+                , class "curlingio-item-purchase"
+                , href (item.url ++ "/add_to_cart")
+                , target "_blank"
+                ]
+                [ text
+                    (if item.price == "-" then
+                        "Register"
+
+                     else
+                        "Purchase"
+                    )
+                ]
             ]
         , div
             [ style "padding" "5px"
             , style "color" "#333"
+            , class "curlingio-item-summary"
             ]
             [ text (Maybe.withDefault "" item.summary) ]
         , div
-            [ style "display" "none" ]
+            [ style "display" "none"
+            , class "curlingio-item-description"
+            ]
             [ text (Maybe.withDefault "" item.description) ]
         ]
