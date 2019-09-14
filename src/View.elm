@@ -58,10 +58,28 @@ viewItems model =
             text "Loading..."
 
         Success decodedItems ->
-            div []
-                [ viewFilter model
-                , div [] (List.map viewItem (filteredItems decodedItems model.filter))
-                ]
+            let
+                items =
+                    filteredItems decodedItems model.filter
+            in
+            if List.isEmpty items then
+                div []
+                    [ viewFilter model
+                    , p [ class "curlingio-registration_no-results" ]
+                        [ case model.filter of
+                            "" ->
+                                text "There's nothing available right now."
+
+                            _ ->
+                                text "There are no results matching your search."
+                        ]
+                    ]
+
+            else
+                div []
+                    [ viewFilter model
+                    , div [ class "curlingio-registration_results" ] (List.map viewItem items)
+                    ]
 
 
 viewItem : Item -> Html Msg
@@ -87,8 +105,7 @@ viewItem item =
                 ]
                 [ text item.name ]
             , div
-                [ style "min-width" "100px"
-                , style "text-align" "right"
+                [ style "min-width" "140px"
                 , class "curlingio-item-price"
                 ]
                 [ text item.price ]
@@ -117,6 +134,7 @@ viewItem item =
         , div
             [ style "display" "none"
             , class "curlingio-item-description"
+            , style "display" "none"
             ]
             [ text (Maybe.withDefault "" item.description) ]
         ]
