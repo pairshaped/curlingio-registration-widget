@@ -6093,7 +6093,7 @@ var author$project$View$viewFilter = function (model) {
 		elm$html$Html$div,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$class('curlingio-filter-container')
+				elm$html$Html$Attributes$class('curlingio_filter-container')
 			]),
 		_List_fromArray(
 			[
@@ -6108,7 +6108,7 @@ var author$project$View$viewFilter = function (model) {
 						A2(elm$html$Html$Attributes$style, 'min-width', '200px'),
 						A2(elm$html$Html$Attributes$style, 'width', '40%'),
 						A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px'),
-						elm$html$Html$Attributes$class('curlingio-filter-input')
+						elm$html$Html$Attributes$class('curlingio_filter-input')
 					]),
 				_List_Nil)
 			]));
@@ -6131,7 +6131,7 @@ var author$project$View$viewItem = function (item) {
 				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
 				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column'),
 				A2(elm$html$Html$Attributes$style, 'margin-bottom', '10px'),
-				elm$html$Html$Attributes$class('curlingio-item-container')
+				elm$html$Html$Attributes$class('curlingio_item-container')
 			]),
 		_List_fromArray(
 			[
@@ -6143,7 +6143,7 @@ var author$project$View$viewItem = function (item) {
 						A2(elm$html$Html$Attributes$style, 'flex-direction', 'row'),
 						A2(elm$html$Html$Attributes$style, 'text-decoration', 'none'),
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
-						elm$html$Html$Attributes$class('curlingio-item-top')
+						elm$html$Html$Attributes$class('curlingio_item-top')
 					]),
 				_List_fromArray(
 					[
@@ -6152,7 +6152,7 @@ var author$project$View$viewItem = function (item) {
 						_List_fromArray(
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '500px'),
-								elm$html$Html$Attributes$class('curlingio-item-name'),
+								elm$html$Html$Attributes$class('curlingio_item-name'),
 								elm$html$Html$Attributes$href(item.du),
 								elm$html$Html$Attributes$target('_blank')
 							]),
@@ -6165,7 +6165,7 @@ var author$project$View$viewItem = function (item) {
 						_List_fromArray(
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
-								elm$html$Html$Attributes$class('curlingio-item-price')
+								elm$html$Html$Attributes$class('curlingio_item-price')
 							]),
 						_List_fromArray(
 							[
@@ -6177,7 +6177,7 @@ var author$project$View$viewItem = function (item) {
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '100px'),
 								A2(elm$html$Html$Attributes$style, 'text-align', 'right'),
-								elm$html$Html$Attributes$class('curlingio-item-purchase'),
+								elm$html$Html$Attributes$class('curlingio_item-purchase'),
 								elm$html$Html$Attributes$href(item.du + '/add_to_cart'),
 								elm$html$Html$Attributes$target('_blank')
 							]),
@@ -6193,7 +6193,7 @@ var author$project$View$viewItem = function (item) {
 					[
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
 						A2(elm$html$Html$Attributes$style, 'color', '#333'),
-						elm$html$Html$Attributes$class('curlingio-item-summary')
+						elm$html$Html$Attributes$class('curlingio_item-summary')
 					]),
 				_List_fromArray(
 					[
@@ -6205,7 +6205,7 @@ var author$project$View$viewItem = function (item) {
 				_List_fromArray(
 					[
 						A2(elm$html$Html$Attributes$style, 'display', 'none'),
-						elm$html$Html$Attributes$class('curlingio-item-description'),
+						elm$html$Html$Attributes$class('curlingio_item-description'),
 						A2(elm$html$Html$Attributes$style, 'display', 'none')
 					]),
 				_List_fromArray(
@@ -6258,7 +6258,7 @@ var author$project$View$viewItems = function (model) {
 						elm$html$Html$p,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('curlingio-registration_no-results')
+								elm$html$Html$Attributes$class('curlingio_no-results')
 							]),
 						_List_fromArray(
 							[
@@ -6281,7 +6281,7 @@ var author$project$View$viewItems = function (model) {
 						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('curlingio-registration_results')
+								elm$html$Html$Attributes$class('curlingio_results')
 							]),
 						A2(elm$core$List$map, author$project$View$viewItem, items))
 					]));
@@ -6294,7 +6294,8 @@ var author$project$View$view = function (model) {
 			[
 				A2(elm$html$Html$Attributes$style, 'display', 'flex'),
 				A2(elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-				elm$html$Html$Attributes$class('curlingio-container')
+				A2(elm$html$Html$Attributes$style, 'overflow-x', 'auto'),
+				elm$html$Html$Attributes$class('curlingio_container')
 			]),
 		_List_fromArray(
 			[
