@@ -1,11 +1,12 @@
 module Types exposing (Flags, Item, Items(..), Model, Msg(..), itemDecoder, itemsDecoder)
 
 import Http
-import Json.Decode exposing (Decoder, field, list, maybe, string)
+import Json.Decode exposing (Decoder, field, int, list, maybe, string, succeed)
 
 
 type Msg
     = GotItems (Result Http.Error (List Item))
+    | ExpandItem Int
     | ChangeFilter String
 
 
@@ -22,11 +23,13 @@ type Items
 
 
 type alias Item =
-    { name : String
+    { id : Int
+    , name : String
     , summary : Maybe String
     , description : Maybe String
     , price : String
     , url : String
+    , expanded : Bool
     }
 
 
@@ -44,9 +47,11 @@ itemsDecoder =
 
 itemDecoder : Decoder Item
 itemDecoder =
-    Json.Decode.map5 Item
+    Json.Decode.map7 Item
+        (field "id" int)
         (field "name" string)
         (maybe (field "summary" string))
         (maybe (field "description" string))
         (field "price" string)
         (field "url" string)
+        (succeed False)

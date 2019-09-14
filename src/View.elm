@@ -89,16 +89,17 @@ viewItem item =
         ]
         [ td
             [ class "curlingio_item-details"
-            , style "min-width" "500px"
+            , style "width" "600px"
             , style "padding" "5px"
+            , style "vertical-align" "top"
+            , style "cursor" "pointer"
+            , onClick (ExpandItem item.id)
             ]
-            [ a
+            [ p
                 [ class "curlingio_item-name"
                 , style "display" "block"
                 , style "margin" "5px"
                 , style "padding" "0"
-                , href item.url
-                , target "_blank"
                 ]
                 [ text item.name ]
             , p
@@ -110,21 +111,28 @@ viewItem item =
                 [ text (Maybe.withDefault "" item.summary) ]
             , p
                 [ class "curlingio_item-description"
-                , style "display" "none"
+                , style "display"
+                    (if item.expanded then
+                        "block"
+
+                     else
+                        "none"
+                    )
                 , style "margin" "5px"
                 , style "padding" "0"
-                , style "display" "none"
                 ]
                 [ text (Maybe.withDefault "" item.description) ]
             ]
         , td
             [ class "curlingio_item-price"
             , style "min-width" "140px"
+            , style "vertical-align" "top"
             ]
             [ text item.price ]
         , td
             [ class "curlingio_item-purchase"
             , style "min-width" "140px"
+            , style "vertical-align" "top"
             ]
             [ a
                 [ style "min-width" "100px"

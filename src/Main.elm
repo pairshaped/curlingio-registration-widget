@@ -31,6 +31,25 @@ init flags =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ExpandItem selectedItemId ->
+            let
+                updateItem item =
+                    if item.id == selectedItemId && not item.expanded then
+                        { item | expanded = True }
+
+                    else
+                        { item | expanded = False }
+
+                updatedItems =
+                    case model.items of
+                        Success items ->
+                            Success (List.map updateItem items)
+
+                        _ ->
+                            model.items
+            in
+            ( { model | items = updatedItems }, Cmd.none )
+
         ChangeFilter filter ->
             ( { model | filter = filter }, Cmd.none )
 
@@ -81,6 +100,6 @@ subscriptions model =
 getItems : String -> String -> Cmd Msg
 getItems host section =
     Http.get
-        { url = host ++ "/" ++ section ++ ".json"
+        { url = host ++ "/" ++ section ++ ".json?season=current"
         , expect = Http.expectJson GotItems itemsDecoder
         }
