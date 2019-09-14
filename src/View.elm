@@ -9,13 +9,8 @@ import Types exposing (..)
 view : Model -> Html Msg
 view model =
     div
-        [ style "display" "flex"
-        , style "flex-direction" "column"
-        , style "overflow-x" "auto"
-        , class "curlingio_container"
-        ]
-        [ viewItems model
-        ]
+        [ class "curlingio_container" ]
+        [ viewItems model ]
 
 
 viewFilter : Model -> Html Msg
@@ -25,11 +20,10 @@ viewFilter model =
             [ placeholder "Type to filter results"
             , value model.filter
             , onInput ChangeFilter
+            , class "curlingio_filter-input"
             , style "padding" "5px"
             , style "min-width" "200px"
-            , style "width" "40%"
-            , style "margin-bottom" "10px"
-            , class "curlingio_filter-input"
+            , style "margin" "0 5px 10px 5px"
             ]
             []
         ]
@@ -79,41 +73,62 @@ viewItems model =
             else
                 div []
                     [ viewFilter model
-                    , div [ class "curlingio_results" ] (List.map viewItem items)
+                    , table
+                        [ class "curlingio_results"
+                        , style "border" "none"
+                        ]
+                        (List.map viewItem items)
                     ]
 
 
 viewItem : Item -> Html Msg
 viewItem item =
-    div
-        [ style "display" "flex"
-        , style "flex-direction" "column"
+    tr
+        [ class "curlingio_item"
         , style "margin-bottom" "10px"
-        , class "curlingio_item-container"
         ]
-        [ div
-            [ style "display" "flex"
-            , style "flex-direction" "row"
-            , style "text-decoration" "none"
+        [ td
+            [ class "curlingio_item-details"
+            , style "min-width" "500px"
             , style "padding" "5px"
-            , class "curlingio_item-top"
             ]
             [ a
-                [ style "min-width" "500px"
-                , class "curlingio_item-name"
+                [ class "curlingio_item-name"
+                , style "display" "block"
+                , style "margin" "5px"
+                , style "padding" "0"
                 , href item.url
                 , target "_blank"
                 ]
                 [ text item.name ]
-            , div
-                [ style "min-width" "140px"
-                , class "curlingio_item-price"
+            , p
+                [ class "curlingio_item-summary"
+                , style "padding" "5px"
+                , style "margin" "0"
+                , style "color" "#333"
                 ]
-                [ text item.price ]
-            , a
+                [ text (Maybe.withDefault "" item.summary) ]
+            , p
+                [ class "curlingio_item-description"
+                , style "display" "none"
+                , style "margin" "5px"
+                , style "padding" "0"
+                , style "display" "none"
+                ]
+                [ text (Maybe.withDefault "" item.description) ]
+            ]
+        , td
+            [ class "curlingio_item-price"
+            , style "min-width" "140px"
+            ]
+            [ text item.price ]
+        , td
+            [ class "curlingio_item-purchase"
+            , style "min-width" "140px"
+            ]
+            [ a
                 [ style "min-width" "100px"
                 , style "text-align" "right"
-                , class "curlingio_item-purchase"
                 , href (item.url ++ "/add_to_cart")
                 , target "_blank"
                 ]
@@ -126,16 +141,4 @@ viewItem item =
                     )
                 ]
             ]
-        , div
-            [ style "padding" "5px"
-            , style "color" "#333"
-            , class "curlingio_item-summary"
-            ]
-            [ text (Maybe.withDefault "" item.summary) ]
-        , div
-            [ style "display" "none"
-            , class "curlingio_item-description"
-            , style "display" "none"
-            ]
-            [ text (Maybe.withDefault "" item.description) ]
         ]
