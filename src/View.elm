@@ -11,7 +11,8 @@ view model =
     div
         [ style "display" "flex"
         , style "flex-direction" "column"
-        , class "curlingio-container"
+        , style "overflow-x" "auto"
+        , class "curlingio_container"
         ]
         [ viewItems model
         ]
@@ -19,7 +20,7 @@ view model =
 
 viewFilter : Model -> Html Msg
 viewFilter model =
-    div [ class "curlingio-filter-container" ]
+    div [ class "curlingio_filter-container" ]
         [ input
             [ placeholder "Type to filter results"
             , value model.filter
@@ -28,7 +29,7 @@ viewFilter model =
             , style "min-width" "200px"
             , style "width" "40%"
             , style "margin-bottom" "10px"
-            , class "curlingio-filter-input"
+            , class "curlingio_filter-input"
             ]
             []
         ]
@@ -65,7 +66,7 @@ viewItems model =
             if List.isEmpty items then
                 div []
                     [ viewFilter model
-                    , p [ class "curlingio-registration_no-results" ]
+                    , p [ class "curlingio_no-results" ]
                         [ case model.filter of
                             "" ->
                                 text "There's nothing available right now."
@@ -78,7 +79,7 @@ viewItems model =
             else
                 div []
                     [ viewFilter model
-                    , div [ class "curlingio-registration_results" ] (List.map viewItem items)
+                    , div [ class "curlingio_results" ] (List.map viewItem items)
                     ]
 
 
@@ -88,31 +89,31 @@ viewItem item =
         [ style "display" "flex"
         , style "flex-direction" "column"
         , style "margin-bottom" "10px"
-        , class "curlingio-item-container"
+        , class "curlingio_item-container"
         ]
         [ div
             [ style "display" "flex"
             , style "flex-direction" "row"
             , style "text-decoration" "none"
             , style "padding" "5px"
-            , class "curlingio-item-top"
+            , class "curlingio_item-top"
             ]
             [ a
                 [ style "min-width" "500px"
-                , class "curlingio-item-name"
+                , class "curlingio_item-name"
                 , href item.url
                 , target "_blank"
                 ]
                 [ text item.name ]
             , div
                 [ style "min-width" "140px"
-                , class "curlingio-item-price"
+                , class "curlingio_item-price"
                 ]
                 [ text item.price ]
             , a
                 [ style "min-width" "100px"
                 , style "text-align" "right"
-                , class "curlingio-item-purchase"
+                , class "curlingio_item-purchase"
                 , href (item.url ++ "/add_to_cart")
                 , target "_blank"
                 ]
@@ -128,12 +129,12 @@ viewItem item =
         , div
             [ style "padding" "5px"
             , style "color" "#333"
-            , class "curlingio-item-summary"
+            , class "curlingio_item-summary"
             ]
             [ text (Maybe.withDefault "" item.summary) ]
         , div
             [ style "display" "none"
-            , class "curlingio-item-description"
+            , class "curlingio_item-description"
             , style "display" "none"
             ]
             [ text (Maybe.withDefault "" item.description) ]
