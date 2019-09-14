@@ -3,6 +3,7 @@ module View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Json.Decode
 import Types exposing (..)
 
 
@@ -92,14 +93,14 @@ viewItem item =
             , style "width" "600px"
             , style "padding" "5px"
             , style "vertical-align" "top"
-            , style "cursor" "pointer"
-            , onClick (ExpandItem item.id)
             ]
-            [ p
+            [ a
                 [ class "curlingio_item-name"
                 , style "display" "block"
                 , style "margin" "5px"
                 , style "padding" "0"
+                , href "#"
+                , custom "click" (Json.Decode.succeed { message = ExpandItem item.id, stopPropagation = True, preventDefault = True })
                 ]
                 [ text item.name ]
             , p
