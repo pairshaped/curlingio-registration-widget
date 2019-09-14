@@ -63,23 +63,23 @@ update msg model =
                         errorMessage =
                             case err of
                                 Http.BadUrl string ->
-                                    "Invalid URL used to fetch data: " ++ string
+                                    "Invalid URL used to fetch the " ++ model.flags.section ++ ": " ++ string
 
                                 Http.Timeout ->
-                                    "Network Timeout when trying to fetch data."
+                                    "Network timeout when trying to fetch the " ++ model.flags.section ++ "."
 
                                 Http.NetworkError ->
-                                    "Network Error when trying to fetch data."
+                                    "Network timeout when trying to fetch the " ++ model.flags.section ++ "."
 
                                 Http.BadStatus int ->
                                     if List.member model.flags.section [ "leagues", "competitions", "products" ] then
-                                        "Invalid response status from server"
+                                        "Invalid response status from server when trying to fetch the " ++ model.flags.section ++ "."
 
                                     else
                                         "The section paramter passed is incorrect. \"" ++ model.flags.section ++ "\" is not a valid section."
 
                                 Http.BadBody string ->
-                                    "Invalid response body from server: " ++ string
+                                    "Invalid response body from server when trying to fetch the " ++ model.flags.section ++ ": " ++ string
                     in
                     ( { model | items = Failure errorMessage }, Cmd.none )
 

@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.aU.ae === region.a5.ae)
+	if (region.aU.ag === region.a5.ag)
 	{
-		return 'on line ' + region.aU.ae;
+		return 'on line ' + region.aU.ag;
 	}
-	return 'on lines ' + region.aU.ae + ' through ' + region.a5.ae;
+	return 'on lines ' + region.aU.ag + ' through ' + region.a5.ag;
 }
 
 
@@ -2356,7 +2356,7 @@ function _Http_configureRequest(xhr, request)
 	}
 	xhr.timeout = request.l.a || 0;
 	xhr.responseType = request.cn.d;
-	xhr.withCredentials = request.R;
+	xhr.withCredentials = request.T;
 }
 
 
@@ -2834,7 +2834,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		B: func(record.B),
+		D: func(record.D),
 		aV: record.aV,
 		aQ: record.aQ
 	}
@@ -3104,7 +3104,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.B;
+		var message = !tag ? value : tag < 3 ? value.a : value.D;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aV;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4098,7 +4098,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.dv,
 		impl.db,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.af && impl.af(sendToApp)
+			var divertHrefToApp = impl.ah && impl.ah(sendToApp)
 			var view = impl.dx;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4173,7 +4173,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		af: function(sendToApp)
+		ah: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4364,10 +4364,10 @@ function _Browser_getViewport()
 	return {
 		bB: _Browser_getScene(),
 		bK: {
-			aB: _Browser_window.pageXOffset,
-			aC: _Browser_window.pageYOffset,
-			ab: _Browser_doc.documentElement.clientWidth,
-			V: _Browser_doc.documentElement.clientHeight
+			aC: _Browser_window.pageXOffset,
+			aD: _Browser_window.pageYOffset,
+			ad: _Browser_doc.documentElement.clientWidth,
+			X: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4377,8 +4377,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		ab: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		V: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		ad: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		X: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4402,14 +4402,14 @@ function _Browser_getViewportOf(id)
 	{
 		return {
 			bB: {
-				ab: node.scrollWidth,
-				V: node.scrollHeight
+				ad: node.scrollWidth,
+				X: node.scrollHeight
 			},
 			bK: {
-				aB: node.scrollLeft,
-				aC: node.scrollTop,
-				ab: node.clientWidth,
-				V: node.clientHeight
+				aC: node.scrollLeft,
+				aD: node.scrollTop,
+				ad: node.clientWidth,
+				X: node.clientHeight
 			}
 		};
 	});
@@ -4441,16 +4441,16 @@ function _Browser_getElement(id)
 		return {
 			bB: _Browser_getScene(),
 			bK: {
-				aB: x,
-				aC: y,
-				ab: _Browser_doc.documentElement.clientWidth,
-				V: _Browser_doc.documentElement.clientHeight
+				aC: x,
+				aD: y,
+				ad: _Browser_doc.documentElement.clientWidth,
+				X: _Browser_doc.documentElement.clientHeight
 			},
 			cm: {
-				aB: x + rect.left,
-				aC: y + rect.top,
-				ab: rect.width,
-				V: rect.height
+				aC: x + rect.left,
+				aD: y + rect.top,
+				ad: rect.width,
+				X: rect.height
 			}
 		};
 	});
@@ -4490,7 +4490,7 @@ var author$project$Types$GotItems = function (a) {
 };
 var author$project$Types$Item = F7(
 	function (id, name, summary, description, price, url, expanded) {
-		return {cl: description, aI: expanded, cx: id, cH: name, cQ: price, dc: summary, dw: url};
+		return {cl: description, aJ: expanded, cx: id, cH: name, cQ: price, dc: summary, dw: url};
 	});
 var elm$core$Basics$False = 1;
 var elm$core$Array$branchFactor = 32;
@@ -5841,7 +5841,7 @@ var elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return elm$http$Http$Request(
 				{
-					R: r.R,
+					T: r.T,
 					b3: r.b3,
 					cn: A2(_Http_mapExpect, func, r.cn),
 					g: r.g,
@@ -5871,7 +5871,7 @@ var elm$http$Http$subscription = _Platform_leaf('Http');
 var elm$http$Http$request = function (r) {
 	return elm$http$Http$command(
 		elm$http$Http$Request(
-			{R: false, b3: r.b3, cn: r.cn, g: r.g, k: r.k, l: r.l, p: r.p, dw: r.dw}));
+			{T: false, b3: r.b3, cn: r.cn, g: r.g, k: r.k, l: r.l, p: r.p, dw: r.dw}));
 };
 var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
@@ -5888,8 +5888,8 @@ var author$project$Main$getItems = F2(
 var author$project$Types$Loading = {$: 1};
 var author$project$Main$init = function (flags) {
 	return _Utils_Tuple2(
-		{a7: '', aJ: flags, W: author$project$Types$Loading},
-		A2(author$project$Main$getItems, flags.bc, flags.az));
+		{a7: '', C: flags, Y: author$project$Types$Loading},
+		A2(author$project$Main$getItems, flags.bc, flags.w));
 };
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
@@ -5955,26 +5955,26 @@ var author$project$Main$update = F2(
 			case 1:
 				var selectedItemId = msg.a;
 				var updateItem = function (item) {
-					return (_Utils_eq(item.cx, selectedItemId) && (!item.aI)) ? _Utils_update(
+					return (_Utils_eq(item.cx, selectedItemId) && (!item.aJ)) ? _Utils_update(
 						item,
-						{aI: true}) : _Utils_update(
+						{aJ: true}) : _Utils_update(
 						item,
-						{aI: false});
+						{aJ: false});
 				};
 				var updatedItems = function () {
-					var _n1 = model.W;
+					var _n1 = model.Y;
 					if (_n1.$ === 2) {
 						var items = _n1.a;
 						return author$project$Types$Success(
 							A2(elm$core$List$map, updateItem, items));
 					} else {
-						return model.W;
+						return model.Y;
 					}
 				}();
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{W: updatedItems}),
+						{Y: updatedItems}),
 					elm$core$Platform$Cmd$none);
 			case 2:
 				var filter = msg.a;
@@ -5991,7 +5991,7 @@ var author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								W: author$project$Types$Success(items)
+								Y: author$project$Types$Success(items)
 							}),
 						elm$core$Platform$Cmd$none);
 				} else {
@@ -6000,28 +6000,28 @@ var author$project$Main$update = F2(
 						switch (err.$) {
 							case 0:
 								var string = err.a;
-								return 'Invalid URL used to fetch data: ' + string;
+								return 'Invalid URL used to fetch the ' + (model.C.w + (': ' + string));
 							case 1:
-								return 'Network Timeout when trying to fetch data.';
+								return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
 							case 2:
-								return 'Network Error when trying to fetch data.';
+								return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
 							case 3:
 								var _int = err.a;
 								return A2(
 									elm$core$List$member,
-									model.aJ.az,
+									model.C.w,
 									_List_fromArray(
-										['leagues', 'competitions', 'products'])) ? 'Invalid response status from server' : ('The section paramter passed is incorrect. \"' + (model.aJ.az + '\" is not a valid section.'));
+										['leagues', 'competitions', 'products'])) ? ('Invalid response status from server when trying to fetch the ' + (model.C.w + '.')) : ('The section paramter passed is incorrect. \"' + (model.C.w + '\" is not a valid section.'));
 							default:
 								var string = err.a;
-								return 'Invalid response body from server: ' + string;
+								return 'Invalid response body from server when trying to fetch the ' + (model.C.w + (': ' + string));
 						}
 					}();
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								W: author$project$Types$Failure(errorMessage)
+								Y: author$project$Types$Failure(errorMessage)
 							}),
 						elm$core$Platform$Cmd$none);
 				}
@@ -6246,7 +6246,7 @@ var author$project$View$viewItem = function (item) {
 								A2(
 								elm$html$Html$Attributes$style,
 								'display',
-								item.aI ? 'block' : 'none'),
+								item.aJ ? 'block' : 'none'),
 								A2(elm$html$Html$Attributes$style, 'margin', '5px'),
 								A2(elm$html$Html$Attributes$style, 'padding', '0')
 							]),
@@ -6304,7 +6304,7 @@ var elm$core$List$isEmpty = function (xs) {
 };
 var elm$html$Html$table = _VirtualDom_node('table');
 var author$project$View$viewItems = function (model) {
-	var _n0 = model.W;
+	var _n0 = model.Y;
 	switch (_n0.$) {
 		case 0:
 			var message = _n0.a;
@@ -6572,7 +6572,7 @@ _Platform_export({'Main':{'init':author$project$Main$main(
 				elm$json$Json$Decode$andThen,
 				function (host) {
 					return elm$json$Json$Decode$succeed(
-						{bc: host, az: section});
+						{bc: host, w: section});
 				},
 				A2(elm$json$Json$Decode$field, 'host', elm$json$Json$Decode$string));
 		},
