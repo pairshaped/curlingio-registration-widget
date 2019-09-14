@@ -99,7 +99,7 @@ viewItem item =
                 , style "display" "block"
                 , style "margin" "5px"
                 , style "padding" "0"
-                , href "#"
+                , href item.url
                 , custom "click" (Json.Decode.succeed { message = ExpandItem item.id, stopPropagation = True, preventDefault = True })
                 ]
                 [ text item.name ]

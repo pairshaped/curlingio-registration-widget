@@ -6210,7 +6210,7 @@ var author$project$View$viewItem = function (item) {
 								A2(elm$html$Html$Attributes$style, 'display', 'block'),
 								A2(elm$html$Html$Attributes$style, 'margin', '5px'),
 								A2(elm$html$Html$Attributes$style, 'padding', '0'),
-								elm$html$Html$Attributes$href('#'),
+								elm$html$Html$Attributes$href(item.dw),
 								A2(
 								elm$html$Html$Events$custom,
 								'click',
