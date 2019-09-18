@@ -125,6 +125,12 @@ viewItem item =
                 [ text (Maybe.withDefault "" item.description) ]
             ]
         , td
+            [ class "curlingio_item-occurs-on"
+            , style "min-width" "140px"
+            , style "vertical-align" "top"
+            ]
+            [ text item.occursOn ]
+        , td
             [ class "curlingio_item-price"
             , style "min-width" "140px"
             , style "vertical-align" "top"

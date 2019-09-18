@@ -1858,8 +1858,8 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 		flagDecoder,
 		args,
 		impl.cy,
-		impl.dv,
-		impl.db,
+		impl.dw,
+		impl.dc,
 		function() { return function() {} }
 	);
 });
@@ -2331,9 +2331,9 @@ var _Http_toTask = F3(function(router, toTask, request)
 		elm$core$Maybe$isJust(request.p) && _Http_track(router, xhr, request.p.a);
 
 		try {
-			xhr.open(request.k, request.dw, true);
+			xhr.open(request.k, request.dx, true);
 		} catch (e) {
-			return done(elm$http$Http$BadUrl_(request.dw));
+			return done(elm$http$Http$BadUrl_(request.dx));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -2377,9 +2377,9 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		dw: xhr.responseURL,
+		dx: xhr.responseURL,
 		bA: xhr.status,
-		c5: xhr.statusText,
+		c6: xhr.statusText,
 		g: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
@@ -2475,14 +2475,14 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Sending({
-			cZ: event.loaded,
+			c_: event.loaded,
 			aR: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Receiving({
-			cQ: event.loaded,
+			cR: event.loaded,
 			aR: event.lengthComputable ? elm$core$Maybe$Just(event.total) : elm$core$Maybe$Nothing
 		}))));
 	});
@@ -2835,8 +2835,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		cD: func(record.cD),
-		c8: record.c8,
-		cO: record.cO
+		c9: record.c9,
+		cP: record.cP
 	}
 });
 
@@ -3105,10 +3105,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.cD;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.c8;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.c9;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.cO) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.cP) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -4059,10 +4059,10 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 		flagDecoder,
 		args,
 		impl.cy,
-		impl.dv,
-		impl.db,
+		impl.dw,
+		impl.dc,
 		function(sendToApp, initialModel) {
-			var view = impl.dx;
+			var view = impl.dy;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -4095,11 +4095,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		flagDecoder,
 		args,
 		impl.cy,
-		impl.dv,
-		impl.db,
+		impl.dw,
+		impl.dc,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.ag && impl.ag(sendToApp)
-			var view = impl.dx;
+			var view = impl.dy;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -4112,7 +4112,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.dr) && (_VirtualDom_doc.title = title = doc.dr);
+				(title !== doc.ds) && (_VirtualDom_doc.title = title = doc.ds);
 			});
 		}
 	);
@@ -4168,8 +4168,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.cJ;
-	var onUrlRequest = impl.cK;
+	var onUrlChange = impl.cK;
+	var onUrlRequest = impl.cL;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4203,9 +4203,9 @@ function _Browser_application(impl)
 		{
 			return A3(impl.cy, flags, _Browser_getUrl(), key);
 		},
-		dx: impl.dx,
-		dv: impl.dv,
-		db: impl.db
+		dy: impl.dy,
+		dw: impl.dw,
+		dc: impl.dc
 	});
 }
 
@@ -4488,11 +4488,10 @@ function _Browser_load(url)
 var author$project$Types$GotItems = function (a) {
 	return {$: 0, a: a};
 };
-var author$project$Types$Item = F7(
-	function (id, name, summary, description, price, url, expanded) {
-		return {ci: description, aI: expanded, cu: id, cF: name, cP: price, dc: summary, dw: url};
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
 	});
-var elm$core$Basics$False = 1;
 var elm$core$Array$branchFactor = 32;
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
@@ -4640,10 +4639,6 @@ var elm$core$Array$compressNodes = F2(
 			}
 		}
 	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
-	});
 var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
 	var x = _n0.a;
@@ -4702,6 +4697,7 @@ var elm$core$Array$builderToArray = F2(
 				builder.d);
 		}
 	});
+var elm$core$Basics$False = 1;
 var elm$core$Basics$idiv = _Basics_idiv;
 var elm$core$Basics$lt = _Utils_lt;
 var elm$core$Elm$JsArray$initialize = _JsArray_initialize;
@@ -4967,33 +4963,120 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 			}
 		}
 	});
-var elm$json$Json$Decode$field = _Json_decodeField;
-var elm$json$Json$Decode$int = _Json_decodeInt;
-var elm$json$Json$Decode$map7 = _Json_map7;
-var elm$json$Json$Decode$map = _Json_map1;
-var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$map2 = _Json_map2;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
+var elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
 var elm$json$Json$Decode$succeed = _Json_succeed;
-var elm$json$Json$Decode$maybe = function (decoder) {
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded = A2(elm$core$Basics$composeR, elm$json$Json$Decode$succeed, NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom);
+var elm$json$Json$Decode$andThen = _Json_andThen;
+var elm$json$Json$Decode$decodeValue = _Json_run;
+var elm$json$Json$Decode$fail = _Json_fail;
+var elm$json$Json$Decode$null = _Json_decodeNull;
+var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$value = _Json_decodeValue;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
+	function (pathDecoder, valDecoder, fallback) {
+		var nullOr = function (decoder) {
+			return elm$json$Json$Decode$oneOf(
+				_List_fromArray(
+					[
+						decoder,
+						elm$json$Json$Decode$null(fallback)
+					]));
+		};
+		var handleResult = function (input) {
+			var _n0 = A2(elm$json$Json$Decode$decodeValue, pathDecoder, input);
+			if (!_n0.$) {
+				var rawValue = _n0.a;
+				var _n1 = A2(
+					elm$json$Json$Decode$decodeValue,
+					nullOr(valDecoder),
+					rawValue);
+				if (!_n1.$) {
+					var finalResult = _n1.a;
+					return elm$json$Json$Decode$succeed(finalResult);
+				} else {
+					var finalErr = _n1.a;
+					return elm$json$Json$Decode$fail(
+						elm$json$Json$Decode$errorToString(finalErr));
+				}
+			} else {
+				return elm$json$Json$Decode$succeed(fallback);
+			}
+		};
+		return A2(elm$json$Json$Decode$andThen, handleResult, elm$json$Json$Decode$value);
+	});
+var elm$json$Json$Decode$field = _Json_decodeField;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
+	function (key, valDecoder, fallback, decoder) {
+		return A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A3(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
+				A2(elm$json$Json$Decode$field, key, elm$json$Json$Decode$value),
+				valDecoder,
+				fallback),
+			decoder);
+	});
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2(elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var author$project$Types$Item = F8(
+	function (id, name, summary, description, occursOn, price, url, expanded) {
+		return {ci: description, aI: expanded, cu: id, cF: name, cG: occursOn, cQ: price, dd: summary, dx: url};
+	});
+var elm$json$Json$Decode$int = _Json_decodeInt;
+var elm$json$Json$Decode$map = _Json_map1;
+var elm$json$Json$Decode$nullable = function (decoder) {
 	return elm$json$Json$Decode$oneOf(
 		_List_fromArray(
 			[
-				A2(elm$json$Json$Decode$map, elm$core$Maybe$Just, decoder),
-				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
+				elm$json$Json$Decode$null(elm$core$Maybe$Nothing),
+				A2(elm$json$Json$Decode$map, elm$core$Maybe$Just, decoder)
 			]));
 };
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Types$itemDecoder = A8(
-	elm$json$Json$Decode$map7,
-	author$project$Types$Item,
-	A2(elm$json$Json$Decode$field, 'id', elm$json$Json$Decode$int),
-	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
-	elm$json$Json$Decode$maybe(
-		A2(elm$json$Json$Decode$field, 'summary', elm$json$Json$Decode$string)),
-	elm$json$Json$Decode$maybe(
-		A2(elm$json$Json$Decode$field, 'description', elm$json$Json$Decode$string)),
-	A2(elm$json$Json$Decode$field, 'price', elm$json$Json$Decode$string),
-	A2(elm$json$Json$Decode$field, 'url', elm$json$Json$Decode$string),
-	elm$json$Json$Decode$succeed(false));
+var author$project$Types$itemDecoder = A2(
+	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded,
+	false,
+	A3(
+		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'url',
+		elm$json$Json$Decode$string,
+		A3(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'price',
+			elm$json$Json$Decode$string,
+			A4(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+				'occurs_on',
+				elm$json$Json$Decode$string,
+				'',
+				A3(
+					NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+					'description',
+					elm$json$Json$Decode$nullable(elm$json$Json$Decode$string),
+					A3(
+						NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+						'summary',
+						elm$json$Json$Decode$nullable(elm$json$Json$Decode$string),
+						A3(
+							NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+							'name',
+							elm$json$Json$Decode$string,
+							A3(
+								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+								'id',
+								elm$json$Json$Decode$int,
+								elm$json$Json$Decode$succeed(author$project$Types$Item)))))))));
 var elm$json$Json$Decode$list = _Json_decodeList;
 var author$project$Types$itemsDecoder = elm$json$Json$Decode$list(author$project$Types$itemDecoder);
 var elm$core$Result$mapError = F2(
@@ -5006,11 +5089,6 @@ var elm$core$Result$mapError = F2(
 			return elm$core$Result$Err(
 				f(e));
 		}
-	});
-var elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
 	});
 var elm$core$Basics$identity = function (x) {
 	return x;
@@ -5848,7 +5926,7 @@ var elm$http$Http$cmdMap = F2(
 					k: r.k,
 					l: r.l,
 					p: r.p,
-					dw: r.dw
+					dx: r.dx
 				});
 		}
 	});
@@ -5871,18 +5949,18 @@ var elm$http$Http$subscription = _Platform_leaf('Http');
 var elm$http$Http$request = function (r) {
 	return elm$http$Http$command(
 		elm$http$Http$Request(
-			{S: false, b0: r.b0, ck: r.ck, g: r.g, k: r.k, l: r.l, p: r.p, dw: r.dw}));
+			{S: false, b0: r.b0, ck: r.ck, g: r.g, k: r.k, l: r.l, p: r.p, dx: r.dx}));
 };
 var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
-		{b0: elm$http$Http$emptyBody, ck: r.ck, g: _List_Nil, k: 'GET', l: elm$core$Maybe$Nothing, p: elm$core$Maybe$Nothing, dw: r.dw});
+		{b0: elm$http$Http$emptyBody, ck: r.ck, g: _List_Nil, k: 'GET', l: elm$core$Maybe$Nothing, p: elm$core$Maybe$Nothing, dx: r.dx});
 };
 var author$project$Main$getItems = F2(
 	function (host, section) {
 		return elm$http$Http$get(
 			{
 				ck: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
-				dw: host + ('/' + (section + '.json?season=current'))
+				dx: host + ('/' + (section + '.json?season=current'))
 			});
 	});
 var author$project$Types$Loading = {$: 1};
@@ -6063,7 +6141,7 @@ var author$project$View$filteredItems = F2(
 						A2(
 							elm$core$String$append,
 							item.cF,
-							A2(elm$core$Maybe$withDefault, '', item.dc))));
+							A2(elm$core$Maybe$withDefault, '', item.dd))));
 			};
 			return A2(elm$core$List$filter, matches, items);
 		}
@@ -6071,7 +6149,6 @@ var author$project$View$filteredItems = F2(
 var author$project$Types$ChangeFilter = function (a) {
 	return {$: 2, a: a};
 };
-var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
 		case 0:
@@ -6210,15 +6287,15 @@ var author$project$View$viewItem = function (item) {
 								A2(elm$html$Html$Attributes$style, 'display', 'block'),
 								A2(elm$html$Html$Attributes$style, 'margin', '5px'),
 								A2(elm$html$Html$Attributes$style, 'padding', '0'),
-								elm$html$Html$Attributes$href(item.dw),
+								elm$html$Html$Attributes$href(item.dx),
 								A2(
 								elm$html$Html$Events$custom,
 								'click',
 								elm$json$Json$Decode$succeed(
 									{
 										cD: author$project$Types$ExpandItem(item.cu),
-										cO: true,
-										c8: true
+										cP: true,
+										c9: true
 									}))
 							]),
 						_List_fromArray(
@@ -6237,7 +6314,7 @@ var author$project$View$viewItem = function (item) {
 						_List_fromArray(
 							[
 								elm$html$Html$text(
-								A2(elm$core$Maybe$withDefault, '', item.dc))
+								A2(elm$core$Maybe$withDefault, '', item.dd))
 							])),
 						A2(
 						elm$html$Html$p,
@@ -6261,13 +6338,25 @@ var author$project$View$viewItem = function (item) {
 				elm$html$Html$td,
 				_List_fromArray(
 					[
+						elm$html$Html$Attributes$class('curlingio_item-occurs-on'),
+						A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
+						A2(elm$html$Html$Attributes$style, 'vertical-align', 'top')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(item.cG)
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_fromArray(
+					[
 						elm$html$Html$Attributes$class('curlingio_item-price'),
 						A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
 						A2(elm$html$Html$Attributes$style, 'vertical-align', 'top')
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(item.cP)
+						elm$html$Html$text(item.cQ)
 					])),
 				A2(
 				elm$html$Html$td,
@@ -6285,13 +6374,13 @@ var author$project$View$viewItem = function (item) {
 							[
 								A2(elm$html$Html$Attributes$style, 'min-width', '100px'),
 								A2(elm$html$Html$Attributes$style, 'text-align', 'right'),
-								elm$html$Html$Attributes$href(item.dw + '/add_to_cart'),
+								elm$html$Html$Attributes$href(item.dx + '/add_to_cart'),
 								elm$html$Html$Attributes$target('_blank')
 							]),
 						_List_fromArray(
 							[
 								elm$html$Html$text(
-								(item.cP === '-') ? 'Register' : 'Purchase')
+								(item.cQ === '-') ? 'Register' : 'Purchase')
 							]))
 					]))
 			]));
@@ -6562,9 +6651,8 @@ var elm$url$Url$fromString = function (str) {
 		A2(elm$core$String$dropLeft, 8, str)) : elm$core$Maybe$Nothing);
 };
 var elm$browser$Browser$element = _Browser_element;
-var elm$json$Json$Decode$andThen = _Json_andThen;
 var author$project$Main$main = elm$browser$Browser$element(
-	{cy: author$project$Main$init, db: author$project$Main$subscriptions, dv: author$project$Main$update, dx: author$project$View$view});
+	{cy: author$project$Main$init, dc: author$project$Main$subscriptions, dw: author$project$Main$update, dy: author$project$View$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	A2(
 		elm$json$Json$Decode$andThen,

@@ -1,7 +1,8 @@
 module Types exposing (Flags, Item, Items(..), Model, Msg(..), itemDecoder, itemsDecoder)
 
 import Http
-import Json.Decode exposing (Decoder, field, int, list, maybe, string, succeed)
+import Json.Decode as Decode exposing (Decoder, int, list, nullable, string)
+import Json.Decode.Pipeline exposing (hardcoded, optional, required)
 
 
 type Msg
@@ -27,6 +28,7 @@ type alias Item =
     , name : String
     , summary : Maybe String
     , description : Maybe String
+    , occursOn : String
     , price : String
     , url : String
     , expanded : Bool
@@ -47,11 +49,12 @@ itemsDecoder =
 
 itemDecoder : Decoder Item
 itemDecoder =
-    Json.Decode.map7 Item
-        (field "id" int)
-        (field "name" string)
-        (maybe (field "summary" string))
-        (maybe (field "description" string))
-        (field "price" string)
-        (field "url" string)
-        (succeed False)
+    Decode.succeed Item
+        |> required "id" int
+        |> required "name" string
+        |> required "summary" (nullable string)
+        |> required "description" (nullable string)
+        |> optional "occurs_on" string ""
+        |> required "price" string
+        |> required "url" string
+        |> hardcoded False
