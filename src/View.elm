@@ -1,8 +1,8 @@
 module View exposing (view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Html exposing (Html, a, div, input, p, text)
+import Html.Attributes exposing (class, href, placeholder, style, value)
+import Html.Events exposing (onInput)
 import Json.Decode
 import Types exposing (..)
 
@@ -16,17 +16,27 @@ view model =
 
 viewFilter : Model -> Html Msg
 viewFilter model =
-    div [ class "curlingio_filter-container" ]
+    div
+        [ class "curlingio_filter-container"
+        , style "display" "flex"
+        , style "justify-content" "space-between"
+        , style "margin-bottom" "15px"
+        ]
         [ input
             [ placeholder "Type to filter results"
             , value model.filter
             , onInput ChangeFilter
             , class "curlingio_filter-input"
             , style "padding" "5px"
-            , style "min-width" "200px"
-            , style "margin" "0 5px 10px 5px"
+            , style "min-width" "250px"
             ]
             []
+        , a
+            [ href (model.flags.host ++ "/" ++ model.flags.section)
+            , style "margin-left" "10px"
+            , style "padding" "5px"
+            ]
+            [ text ("All " ++ model.flags.section) ]
         ]
 
 
@@ -74,9 +84,8 @@ viewItems model =
             else
                 div []
                     [ viewFilter model
-                    , table
+                    , div
                         [ class "curlingio_results"
-                        , style "border" "none"
                         ]
                         (List.map viewItem items)
                     ]
@@ -84,39 +93,39 @@ viewItems model =
 
 viewItem : Item -> Html Msg
 viewItem item =
-    tr
+    div
         [ class "curlingio_item"
-        , style "margin-bottom" "10px"
+        , style "display" "flex"
+        , style "padding" "5px 0"
+        , style "margin" "5px 0"
+        , style "border-bottom" "1px solid #eee"
         ]
-        [ td
+        [ div
             [ class "curlingio_item-details"
-            , style "width" "600px"
-            , style "padding" "5px"
-            , style "vertical-align" "top"
+            , style "min-width" "180px"
+            , style "flex-grow" "1"
             ]
             [ a
                 [ class "curlingio_item-name"
                 , style "display" "block"
-                , style "margin" "5px"
-                , style "padding" "0"
+                , style "margin-bottom" "5px"
                 , href item.url
                 ]
                 [ text item.name ]
             , div
                 [ class "curlingio_item-occurs-on"
-                , style "margin" "5px"
+                , style "margin-bottom" "5px"
                 ]
                 [ text item.occursOn ]
             , div
                 [ class "curlingio_item-summary"
-                , style "margin" "5px"
+                , style "margin-bottom" "5px"
                 ]
                 [ text (Maybe.withDefault "" item.summary) ]
             ]
-        , td
+        , div
             [ class "curlingio_item-price"
             , style "min-width" "140px"
-            , style "vertical-align" "top"
             ]
             [ div [ style "margin-bottom" "5px" ]
                 [ text item.price ]
@@ -132,9 +141,7 @@ viewPurchaseLink url price =
 
     else
         a
-            [ style "min-width" "100px"
-            , style "text-align" "right"
-            , href (url ++ "/add_to_cart")
+            [ href (url ++ "/add_to_cart")
             ]
             [ text
                 (if String.isEmpty price then
