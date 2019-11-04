@@ -6235,12 +6235,12 @@ var author$project$View$viewFilter = function (model) {
 var author$project$Types$ExpandItem = function (a) {
 	return {$: 1, a: a};
 };
+var elm$core$String$isEmpty = function (string) {
+	return string === '';
+};
 var elm$html$Html$a = _VirtualDom_node('a');
-var elm$html$Html$p = _VirtualDom_node('p');
-var elm$html$Html$td = _VirtualDom_node('td');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var elm$html$Html$tr = _VirtualDom_node('tr');
 var elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
@@ -6248,6 +6248,26 @@ var elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
+var author$project$View$viewPurchaseLink = F2(
+	function (url, price) {
+		return ((!elm$core$String$isEmpty(price)) && (!A2(elm$core$String$contains, '$', price))) ? elm$html$Html$text('') : A2(
+			elm$html$Html$a,
+			_List_fromArray(
+				[
+					A2(elm$html$Html$Attributes$style, 'min-width', '100px'),
+					A2(elm$html$Html$Attributes$style, 'text-align', 'right'),
+					elm$html$Html$Attributes$href(url + '/add_to_cart'),
+					elm$html$Html$Attributes$target('_blank')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text(
+					elm$core$String$isEmpty(price) ? 'Register' : 'Purchase')
+				]));
+	});
+var elm$html$Html$p = _VirtualDom_node('p');
+var elm$html$Html$td = _VirtualDom_node('td');
+var elm$html$Html$tr = _VirtualDom_node('tr');
 var elm$virtual_dom$VirtualDom$Custom = function (a) {
 	return {$: 3, a: a};
 };
@@ -6368,20 +6388,7 @@ var author$project$View$viewItem = function (item) {
 					]),
 				_List_fromArray(
 					[
-						A2(
-						elm$html$Html$a,
-						_List_fromArray(
-							[
-								A2(elm$html$Html$Attributes$style, 'min-width', '100px'),
-								A2(elm$html$Html$Attributes$style, 'text-align', 'right'),
-								elm$html$Html$Attributes$href(item.dx + '/add_to_cart'),
-								elm$html$Html$Attributes$target('_blank')
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(
-								(item.cQ === '-') ? 'Register' : 'Purchase')
-							]))
+						A2(author$project$View$viewPurchaseLink, item.dx, item.cQ)
 					]))
 			]));
 };
@@ -6536,9 +6543,6 @@ var elm$core$String$startsWith = _String_startsWith;
 var elm$url$Url$Http = 0;
 var elm$url$Url$Https = 1;
 var elm$core$String$indexes = _String_indexes;
-var elm$core$String$isEmpty = function (string) {
-	return string === '';
-};
 var elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3(elm$core$String$slice, 0, n, string);

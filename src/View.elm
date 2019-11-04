@@ -141,19 +141,28 @@ viewItem item =
             , style "min-width" "140px"
             , style "vertical-align" "top"
             ]
-            [ a
-                [ style "min-width" "100px"
-                , style "text-align" "right"
-                , href (item.url ++ "/add_to_cart")
-                , target "_blank"
-                ]
-                [ text
-                    (if item.price == "-" then
-                        "Register"
-
-                     else
-                        "Purchase"
-                    )
-                ]
+            [ viewPurchaseLink item.url item.price
             ]
         ]
+
+
+viewPurchaseLink : String -> String -> Html Msg
+viewPurchaseLink url price =
+    if not (String.isEmpty price) && not (String.contains "$" price) then
+        text ""
+
+    else
+        a
+            [ style "min-width" "100px"
+            , style "text-align" "right"
+            , href (url ++ "/add_to_cart")
+            , target "_blank"
+            ]
+            [ text
+                (if String.isEmpty price then
+                    "Register"
+
+                 else
+                    "Purchase"
+                )
+            ]
