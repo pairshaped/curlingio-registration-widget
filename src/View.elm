@@ -100,48 +100,27 @@ viewItem item =
                 , style "margin" "5px"
                 , style "padding" "0"
                 , href item.url
-                , custom "click" (Json.Decode.succeed { message = ExpandItem item.id, stopPropagation = True, preventDefault = True })
                 ]
                 [ text item.name ]
-            , p
+            , div
+                [ class "curlingio_item-occurs-on"
+                , style "margin" "5px"
+                ]
+                [ text item.occursOn ]
+            , div
                 [ class "curlingio_item-summary"
-                , style "padding" "5px"
-                , style "margin" "0"
-                , style "color" "#333"
+                , style "margin" "5px"
                 ]
                 [ text (Maybe.withDefault "" item.summary) ]
-            , p
-                [ class "curlingio_item-description"
-                , style "display"
-                    (if item.expanded then
-                        "block"
-
-                     else
-                        "none"
-                    )
-                , style "margin" "5px"
-                , style "padding" "0"
-                ]
-                [ text (Maybe.withDefault "" item.description) ]
             ]
-        , td
-            [ class "curlingio_item-occurs-on"
-            , style "min-width" "140px"
-            , style "vertical-align" "top"
-            ]
-            [ text item.occursOn ]
         , td
             [ class "curlingio_item-price"
             , style "min-width" "140px"
             , style "vertical-align" "top"
             ]
-            [ text item.price ]
-        , td
-            [ class "curlingio_item-purchase"
-            , style "min-width" "140px"
-            , style "vertical-align" "top"
-            ]
-            [ viewPurchaseLink item.url item.price
+            [ div [ style "margin-bottom" "5px" ]
+                [ text item.price ]
+            , viewPurchaseLink item.url item.price
             ]
         ]
 
@@ -156,7 +135,6 @@ viewPurchaseLink url price =
             [ style "min-width" "100px"
             , style "text-align" "right"
             , href (url ++ "/add_to_cart")
-            , target "_blank"
             ]
             [ text
                 (if String.isEmpty price then

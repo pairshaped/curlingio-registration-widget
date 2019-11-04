@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.aS.af === region.a2.af)
+	if (region.aT.af === region.a4.af)
 	{
-		return 'on line ' + region.aS.af;
+		return 'on line ' + region.aT.af;
 	}
-	return 'on lines ' + region.aS.af + ' through ' + region.a2.af;
+	return 'on lines ' + region.aT.af + ' through ' + region.a4.af;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cy,
-		impl.dw,
-		impl.dc,
+		impl.cA,
+		impl.dv,
+		impl.db,
 		function() { return function() {} }
 	);
 });
@@ -2321,25 +2321,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.ck.a(response)));
+			callback(toTask(request.cm.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done(elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done(elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.ck.b, xhr)); });
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.cm.b, xhr)); });
 		elm$core$Maybe$isJust(request.p) && _Http_track(router, xhr, request.p.a);
 
 		try {
-			xhr.open(request.k, request.dx, true);
+			xhr.open(request.k, request.dw, true);
 		} catch (e) {
-			return done(elm$http$Http$BadUrl_(request.dx));
+			return done(elm$http$Http$BadUrl_(request.dw));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.b0.a && xhr.setRequestHeader('Content-Type', request.b0.a);
-		xhr.send(request.b0.b);
+		request.b2.a && xhr.setRequestHeader('Content-Type', request.b2.a);
+		xhr.send(request.b2.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -2355,8 +2355,8 @@ function _Http_configureRequest(xhr, request)
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
 	xhr.timeout = request.l.a || 0;
-	xhr.responseType = request.ck.d;
-	xhr.withCredentials = request.S;
+	xhr.responseType = request.cm.d;
+	xhr.withCredentials = request.T;
 }
 
 
@@ -2377,8 +2377,8 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		dx: xhr.responseURL,
-		bA: xhr.status,
+		dw: xhr.responseURL,
+		bC: xhr.status,
 		c6: xhr.statusText,
 		g: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
@@ -2476,14 +2476,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Sending({
 			c_: event.loaded,
-			aR: event.total
+			aS: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Receiving({
 			cR: event.loaded,
-			aR: event.lengthComputable ? elm$core$Maybe$Just(event.total) : elm$core$Maybe$Nothing
+			aS: event.lengthComputable ? elm$core$Maybe$Just(event.total) : elm$core$Maybe$Nothing
 		}))));
 	});
 }
@@ -2834,9 +2834,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		cD: func(record.cD),
-		c9: record.c9,
-		cP: record.cP
+		D: func(record.D),
+		aU: record.aU,
+		aP: record.aP
 	}
 });
 
@@ -3104,11 +3104,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.cD;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.c9;
+		var message = !tag ? value : tag < 3 ? value.a : value.D;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aU;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.cP) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.aP) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -4058,11 +4058,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cy,
-		impl.dw,
-		impl.dc,
+		impl.cA,
+		impl.dv,
+		impl.db,
 		function(sendToApp, initialModel) {
-			var view = impl.dy;
+			var view = impl.dx;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -4094,12 +4094,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.cy,
-		impl.dw,
-		impl.dc,
+		impl.cA,
+		impl.dv,
+		impl.db,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.ag && impl.ag(sendToApp)
-			var view = impl.dy;
+			var view = impl.dx;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -4107,12 +4107,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.b0);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.b2);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.ds) && (_VirtualDom_doc.title = title = doc.ds);
+				(title !== doc.dr) && (_VirtualDom_doc.title = title = doc.dr);
 			});
 		}
 	);
@@ -4168,8 +4168,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.cK;
-	var onUrlRequest = impl.cL;
+	var onUrlChange = impl.cL;
+	var onUrlRequest = impl.cM;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4189,9 +4189,9 @@ function _Browser_application(impl)
 					var next = elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.br === next.br
-							&& curr.a9 === next.a9
-							&& curr.bo.a === next.bo.a
+							&& curr.bt === next.bt
+							&& curr.bb === next.bb
+							&& curr.bq.a === next.bq.a
 						)
 							? elm$browser$Browser$Internal(next)
 							: elm$browser$Browser$External(href)
@@ -4199,13 +4199,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		cy: function(flags)
+		cA: function(flags)
 		{
-			return A3(impl.cy, flags, _Browser_getUrl(), key);
+			return A3(impl.cA, flags, _Browser_getUrl(), key);
 		},
-		dy: impl.dy,
-		dw: impl.dw,
-		dc: impl.dc
+		dx: impl.dx,
+		dv: impl.dv,
+		db: impl.db
 	});
 }
 
@@ -4271,17 +4271,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { cr: 'hidden', b9: 'visibilitychange' }
+		? { ct: 'hidden', cb: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { cr: 'mozHidden', b9: 'mozvisibilitychange' }
+		? { ct: 'mozHidden', cb: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { cr: 'msHidden', b9: 'msvisibilitychange' }
+		? { ct: 'msHidden', cb: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { cr: 'webkitHidden', b9: 'webkitvisibilitychange' }
-		: { cr: 'hidden', b9: 'visibilitychange' };
+		? { ct: 'webkitHidden', cb: 'webkitvisibilitychange' }
+		: { ct: 'hidden', cb: 'visibilitychange' };
 }
 
 
@@ -4362,12 +4362,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		by: _Browser_getScene(),
-		bH: {
+		bA: _Browser_getScene(),
+		bJ: {
 			aB: _Browser_window.pageXOffset,
 			aC: _Browser_window.pageYOffset,
 			ac: _Browser_doc.documentElement.clientWidth,
-			W: _Browser_doc.documentElement.clientHeight
+			X: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4378,7 +4378,7 @@ function _Browser_getScene()
 	var elem = _Browser_doc.documentElement;
 	return {
 		ac: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		W: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		X: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4401,15 +4401,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			by: {
+			bA: {
 				ac: node.scrollWidth,
-				W: node.scrollHeight
+				X: node.scrollHeight
 			},
-			bH: {
+			bJ: {
 				aB: node.scrollLeft,
 				aC: node.scrollTop,
 				ac: node.clientWidth,
-				W: node.clientHeight
+				X: node.clientHeight
 			}
 		};
 	});
@@ -4439,18 +4439,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			by: _Browser_getScene(),
-			bH: {
+			bA: _Browser_getScene(),
+			bJ: {
 				aB: x,
 				aC: y,
 				ac: _Browser_doc.documentElement.clientWidth,
-				W: _Browser_doc.documentElement.clientHeight
+				X: _Browser_doc.documentElement.clientHeight
 			},
-			cj: {
+			cl: {
 				aB: x + rect.left,
 				aC: y + rect.top,
 				ac: rect.width,
-				W: rect.height
+				X: rect.height
 			}
 		};
 	});
@@ -4965,18 +4965,12 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 	});
 var elm$json$Json$Decode$map2 = _Json_map2;
 var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
-var elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
-var elm$json$Json$Decode$succeed = _Json_succeed;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded = A2(elm$core$Basics$composeR, elm$json$Json$Decode$succeed, NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom);
 var elm$json$Json$Decode$andThen = _Json_andThen;
 var elm$json$Json$Decode$decodeValue = _Json_run;
 var elm$json$Json$Decode$fail = _Json_fail;
 var elm$json$Json$Decode$null = _Json_decodeNull;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$succeed = _Json_succeed;
 var elm$json$Json$Decode$value = _Json_decodeValue;
 var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
 	function (pathDecoder, valDecoder, fallback) {
@@ -5029,9 +5023,9 @@ var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
 			A2(elm$json$Json$Decode$field, key, valDecoder),
 			decoder);
 	});
-var author$project$Types$Item = F8(
-	function (id, name, summary, description, occursOn, price, url, expanded) {
-		return {ci: description, aI: expanded, cu: id, cF: name, cG: occursOn, cQ: price, dd: summary, dx: url};
+var author$project$Types$Item = F6(
+	function (id, name, summary, occursOn, price, url) {
+		return {cw: id, cG: name, cH: occursOn, cQ: price, dc: summary, dw: url};
 	});
 var elm$json$Json$Decode$int = _Json_decodeInt;
 var elm$json$Json$Decode$map = _Json_map1;
@@ -5044,39 +5038,32 @@ var elm$json$Json$Decode$nullable = function (decoder) {
 			]));
 };
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$Types$itemDecoder = A2(
-	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$hardcoded,
-	false,
+var author$project$Types$itemDecoder = A3(
+	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'url',
+	elm$json$Json$Decode$string,
 	A3(
 		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'url',
+		'price',
 		elm$json$Json$Decode$string,
-		A3(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'price',
+		A4(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+			'occurs_on',
 			elm$json$Json$Decode$string,
-			A4(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-				'occurs_on',
-				elm$json$Json$Decode$string,
-				'',
+			'',
+			A3(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'summary',
+				elm$json$Json$Decode$nullable(elm$json$Json$Decode$string),
 				A3(
 					NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-					'description',
-					elm$json$Json$Decode$nullable(elm$json$Json$Decode$string),
+					'name',
+					elm$json$Json$Decode$string,
 					A3(
 						NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-						'summary',
-						elm$json$Json$Decode$nullable(elm$json$Json$Decode$string),
-						A3(
-							NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-							'name',
-							elm$json$Json$Decode$string,
-							A3(
-								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-								'id',
-								elm$json$Json$Decode$int,
-								elm$json$Json$Decode$succeed(author$project$Types$Item)))))))));
+						'id',
+						elm$json$Json$Decode$int,
+						elm$json$Json$Decode$succeed(author$project$Types$Item)))))));
 var elm$json$Json$Decode$list = _Json_decodeList;
 var author$project$Types$itemsDecoder = elm$json$Json$Decode$list(author$project$Types$itemDecoder);
 var elm$core$Result$mapError = F2(
@@ -5089,6 +5076,11 @@ var elm$core$Result$mapError = F2(
 			return elm$core$Result$Err(
 				f(e));
 		}
+	});
+var elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
 	});
 var elm$core$Basics$identity = function (x) {
 	return x;
@@ -5680,7 +5672,7 @@ var elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return elm$core$Result$Err(
-					elm$http$Http$BadStatus(metadata.bA));
+					elm$http$Http$BadStatus(metadata.bC));
 			default:
 				var body = response.b;
 				return A2(
@@ -5710,7 +5702,7 @@ var elm$http$Http$Request = function (a) {
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {bu: reqs, bB: subs};
+		return {bw: reqs, bD: subs};
 	});
 var elm$http$Http$init = elm$core$Task$succeed(
 	A2(elm$http$Http$State, elm$core$Dict$empty, _List_Nil));
@@ -5785,7 +5777,7 @@ var elm$http$Http$onEffects = F4(
 				return elm$core$Task$succeed(
 					A2(elm$http$Http$State, reqs, subs));
 			},
-			A3(elm$http$Http$updateReqs, router, cmds, state.bu));
+			A3(elm$http$Http$updateReqs, router, cmds, state.bw));
 	});
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
@@ -5905,7 +5897,7 @@ var elm$http$Http$onSelfMsg = F3(
 				A2(
 					elm$core$List$filterMap,
 					A3(elm$http$Http$maybeSend, router, tracker, progress),
-					state.bB)));
+					state.bD)));
 	});
 var elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -5919,14 +5911,14 @@ var elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return elm$http$Http$Request(
 				{
-					S: r.S,
-					b0: r.b0,
-					ck: A2(_Http_mapExpect, func, r.ck),
+					T: r.T,
+					b2: r.b2,
+					cm: A2(_Http_mapExpect, func, r.cm),
 					g: r.g,
 					k: r.k,
 					l: r.l,
 					p: r.p,
-					dx: r.dx
+					dw: r.dw
 				});
 		}
 	});
@@ -5949,25 +5941,25 @@ var elm$http$Http$subscription = _Platform_leaf('Http');
 var elm$http$Http$request = function (r) {
 	return elm$http$Http$command(
 		elm$http$Http$Request(
-			{S: false, b0: r.b0, ck: r.ck, g: r.g, k: r.k, l: r.l, p: r.p, dx: r.dx}));
+			{T: false, b2: r.b2, cm: r.cm, g: r.g, k: r.k, l: r.l, p: r.p, dw: r.dw}));
 };
 var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
-		{b0: elm$http$Http$emptyBody, ck: r.ck, g: _List_Nil, k: 'GET', l: elm$core$Maybe$Nothing, p: elm$core$Maybe$Nothing, dx: r.dx});
+		{b2: elm$http$Http$emptyBody, cm: r.cm, g: _List_Nil, k: 'GET', l: elm$core$Maybe$Nothing, p: elm$core$Maybe$Nothing, dw: r.dw});
 };
 var author$project$Main$getItems = F2(
 	function (host, section) {
 		return elm$http$Http$get(
 			{
-				ck: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
-				dx: host + ('/' + (section + '.json?season=current'))
+				cm: A2(elm$http$Http$expectJson, author$project$Types$GotItems, author$project$Types$itemsDecoder),
+				dw: host + ('/' + (section + '.json?season=current'))
 			});
 	});
 var author$project$Types$Loading = {$: 1};
 var author$project$Main$init = function (flags) {
 	return _Utils_Tuple2(
-		{a4: '', C: flags, X: author$project$Types$Loading},
-		A2(author$project$Main$getItems, flags.a9, flags.w));
+		{a6: '', C: flags, aL: author$project$Types$Loading},
+		A2(author$project$Main$getItems, flags.bb, flags.w));
 };
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
@@ -5980,21 +5972,6 @@ var author$project$Types$Failure = function (a) {
 var author$project$Types$Success = function (a) {
 	return {$: 2, a: a};
 };
-var elm$core$Basics$not = _Basics_not;
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -6029,80 +6006,55 @@ var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$update = F2(
 	function (msg, model) {
-		switch (msg.$) {
-			case 1:
-				var selectedItemId = msg.a;
-				var updateItem = function (item) {
-					return (_Utils_eq(item.cu, selectedItemId) && (!item.aI)) ? _Utils_update(
-						item,
-						{aI: true}) : _Utils_update(
-						item,
-						{aI: false});
-				};
-				var updatedItems = function () {
-					var _n1 = model.X;
-					if (_n1.$ === 2) {
-						var items = _n1.a;
-						return author$project$Types$Success(
-							A2(elm$core$List$map, updateItem, items));
-					} else {
-						return model.X;
+		if (msg.$ === 1) {
+			var filter = msg.a;
+			return _Utils_Tuple2(
+				_Utils_update(
+					model,
+					{a6: filter}),
+				elm$core$Platform$Cmd$none);
+		} else {
+			var result = msg.a;
+			if (!result.$) {
+				var items = result.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							aL: author$project$Types$Success(items)
+						}),
+					elm$core$Platform$Cmd$none);
+			} else {
+				var err = result.a;
+				var errorMessage = function () {
+					switch (err.$) {
+						case 0:
+							var string = err.a;
+							return 'Invalid URL used to fetch the ' + (model.C.w + (': ' + string));
+						case 1:
+							return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
+						case 2:
+							return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
+						case 3:
+							var _int = err.a;
+							return A2(
+								elm$core$List$member,
+								model.C.w,
+								_List_fromArray(
+									['leagues', 'competitions', 'products'])) ? ('Invalid response status from server when trying to fetch the ' + (model.C.w + '.')) : ('The section paramter passed is incorrect. \"' + (model.C.w + '\" is not a valid section.'));
+						default:
+							var string = err.a;
+							return 'Invalid response body from server when trying to fetch the ' + (model.C.w + (': ' + string));
 					}
 				}();
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{X: updatedItems}),
+						{
+							aL: author$project$Types$Failure(errorMessage)
+						}),
 					elm$core$Platform$Cmd$none);
-			case 2:
-				var filter = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{a4: filter}),
-					elm$core$Platform$Cmd$none);
-			default:
-				var result = msg.a;
-				if (!result.$) {
-					var items = result.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								X: author$project$Types$Success(items)
-							}),
-						elm$core$Platform$Cmd$none);
-				} else {
-					var err = result.a;
-					var errorMessage = function () {
-						switch (err.$) {
-							case 0:
-								var string = err.a;
-								return 'Invalid URL used to fetch the ' + (model.C.w + (': ' + string));
-							case 1:
-								return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
-							case 2:
-								return 'Network timeout when trying to fetch the ' + (model.C.w + '.');
-							case 3:
-								var _int = err.a;
-								return A2(
-									elm$core$List$member,
-									model.C.w,
-									_List_fromArray(
-										['leagues', 'competitions', 'products'])) ? ('Invalid response status from server when trying to fetch the ' + (model.C.w + '.')) : ('The section paramter passed is incorrect. \"' + (model.C.w + '\" is not a valid section.'));
-							default:
-								var string = err.a;
-								return 'Invalid response body from server when trying to fetch the ' + (model.C.w + (': ' + string));
-						}
-					}();
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								X: author$project$Types$Failure(errorMessage)
-							}),
-						elm$core$Platform$Cmd$none);
-				}
+			}
 		}
 	});
 var elm$core$List$filter = F2(
@@ -6140,14 +6092,14 @@ var author$project$View$filteredItems = F2(
 					elm$core$String$toUpper(
 						A2(
 							elm$core$String$append,
-							item.cF,
-							A2(elm$core$Maybe$withDefault, '', item.dd))));
+							item.cG,
+							A2(elm$core$Maybe$withDefault, '', item.dc))));
 			};
 			return A2(elm$core$List$filter, matches, items);
 		}
 	});
 var author$project$Types$ChangeFilter = function (a) {
-	return {$: 2, a: a};
+	return {$: 1, a: a};
 };
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
@@ -6222,7 +6174,7 @@ var author$project$View$viewFilter = function (model) {
 				_List_fromArray(
 					[
 						elm$html$Html$Attributes$placeholder('Type to filter results'),
-						elm$html$Html$Attributes$value(model.a4),
+						elm$html$Html$Attributes$value(model.a6),
 						elm$html$Html$Events$onInput(author$project$Types$ChangeFilter),
 						elm$html$Html$Attributes$class('curlingio_filter-input'),
 						A2(elm$html$Html$Attributes$style, 'padding', '5px'),
@@ -6232,9 +6184,7 @@ var author$project$View$viewFilter = function (model) {
 				_List_Nil)
 			]));
 };
-var author$project$Types$ExpandItem = function (a) {
-	return {$: 1, a: a};
-};
+var elm$core$Basics$not = _Basics_not;
 var elm$core$String$isEmpty = function (string) {
 	return string === '';
 };
@@ -6247,7 +6197,6 @@ var elm$html$Html$Attributes$href = function (url) {
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
-var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
 var author$project$View$viewPurchaseLink = F2(
 	function (url, price) {
 		return ((!elm$core$String$isEmpty(price)) && (!A2(elm$core$String$contains, '$', price))) ? elm$html$Html$text('') : A2(
@@ -6256,8 +6205,7 @@ var author$project$View$viewPurchaseLink = F2(
 				[
 					A2(elm$html$Html$Attributes$style, 'min-width', '100px'),
 					A2(elm$html$Html$Attributes$style, 'text-align', 'right'),
-					elm$html$Html$Attributes$href(url + '/add_to_cart'),
-					elm$html$Html$Attributes$target('_blank')
+					elm$html$Html$Attributes$href(url + '/add_to_cart')
 				]),
 			_List_fromArray(
 				[
@@ -6265,19 +6213,8 @@ var author$project$View$viewPurchaseLink = F2(
 					elm$core$String$isEmpty(price) ? 'Register' : 'Purchase')
 				]));
 	});
-var elm$html$Html$p = _VirtualDom_node('p');
 var elm$html$Html$td = _VirtualDom_node('td');
 var elm$html$Html$tr = _VirtualDom_node('tr');
-var elm$virtual_dom$VirtualDom$Custom = function (a) {
-	return {$: 3, a: a};
-};
-var elm$html$Html$Events$custom = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Custom(decoder));
-	});
 var author$project$View$viewItem = function (item) {
 	return A2(
 		elm$html$Html$tr,
@@ -6307,64 +6244,35 @@ var author$project$View$viewItem = function (item) {
 								A2(elm$html$Html$Attributes$style, 'display', 'block'),
 								A2(elm$html$Html$Attributes$style, 'margin', '5px'),
 								A2(elm$html$Html$Attributes$style, 'padding', '0'),
-								elm$html$Html$Attributes$href(item.dx),
-								A2(
-								elm$html$Html$Events$custom,
-								'click',
-								elm$json$Json$Decode$succeed(
-									{
-										cD: author$project$Types$ExpandItem(item.cu),
-										cP: true,
-										c9: true
-									}))
+								elm$html$Html$Attributes$href(item.dw)
 							]),
 						_List_fromArray(
 							[
-								elm$html$Html$text(item.cF)
+								elm$html$Html$text(item.cG)
 							])),
 						A2(
-						elm$html$Html$p,
+						elm$html$Html$div,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('curlingio_item-occurs-on'),
+								A2(elm$html$Html$Attributes$style, 'margin', '5px')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(item.cH)
+							])),
+						A2(
+						elm$html$Html$div,
 						_List_fromArray(
 							[
 								elm$html$Html$Attributes$class('curlingio_item-summary'),
-								A2(elm$html$Html$Attributes$style, 'padding', '5px'),
-								A2(elm$html$Html$Attributes$style, 'margin', '0'),
-								A2(elm$html$Html$Attributes$style, 'color', '#333')
+								A2(elm$html$Html$Attributes$style, 'margin', '5px')
 							]),
 						_List_fromArray(
 							[
 								elm$html$Html$text(
-								A2(elm$core$Maybe$withDefault, '', item.dd))
-							])),
-						A2(
-						elm$html$Html$p,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$class('curlingio_item-description'),
-								A2(
-								elm$html$Html$Attributes$style,
-								'display',
-								item.aI ? 'block' : 'none'),
-								A2(elm$html$Html$Attributes$style, 'margin', '5px'),
-								A2(elm$html$Html$Attributes$style, 'padding', '0')
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(
-								A2(elm$core$Maybe$withDefault, '', item.ci))
+								A2(elm$core$Maybe$withDefault, '', item.dc))
 							]))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('curlingio_item-occurs-on'),
-						A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
-						A2(elm$html$Html$Attributes$style, 'vertical-align', 'top')
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(item.cG)
 					])),
 				A2(
 				elm$html$Html$td,
@@ -6376,19 +6284,17 @@ var author$project$View$viewItem = function (item) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(item.cQ)
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('curlingio_item-purchase'),
-						A2(elm$html$Html$Attributes$style, 'min-width', '140px'),
-						A2(elm$html$Html$Attributes$style, 'vertical-align', 'top')
-					]),
-				_List_fromArray(
-					[
-						A2(author$project$View$viewPurchaseLink, item.dx, item.cQ)
+						A2(
+						elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2(elm$html$Html$Attributes$style, 'margin-bottom', '5px')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(item.cQ)
+							])),
+						A2(author$project$View$viewPurchaseLink, item.dw, item.cQ)
 					]))
 			]));
 };
@@ -6399,9 +6305,24 @@ var elm$core$List$isEmpty = function (xs) {
 		return false;
 	}
 };
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$p = _VirtualDom_node('p');
 var elm$html$Html$table = _VirtualDom_node('table');
 var author$project$View$viewItems = function (model) {
-	var _n0 = model.X;
+	var _n0 = model.aL;
 	switch (_n0.$) {
 		case 0:
 			var message = _n0.a;
@@ -6410,7 +6331,7 @@ var author$project$View$viewItems = function (model) {
 			return elm$html$Html$text('Loading...');
 		default:
 			var decodedItems = _n0.a;
-			var items = A2(author$project$View$filteredItems, decodedItems, model.a4);
+			var items = A2(author$project$View$filteredItems, decodedItems, model.a6);
 			return elm$core$List$isEmpty(items) ? A2(
 				elm$html$Html$div,
 				_List_Nil,
@@ -6426,7 +6347,7 @@ var author$project$View$viewItems = function (model) {
 						_List_fromArray(
 							[
 								function () {
-								var _n1 = model.a4;
+								var _n1 = model.a6;
 								if (_n1 === '') {
 									return elm$html$Html$text('There\'s nothing available right now.');
 								} else {
@@ -6550,7 +6471,7 @@ var elm$core$String$left = F2(
 var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {a5: fragment, a9: host, bm: path, bo: port_, br: protocol, bs: query};
+		return {a7: fragment, bb: host, bo: path, bq: port_, bt: protocol, bu: query};
 	});
 var elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
@@ -6656,7 +6577,7 @@ var elm$url$Url$fromString = function (str) {
 };
 var elm$browser$Browser$element = _Browser_element;
 var author$project$Main$main = elm$browser$Browser$element(
-	{cy: author$project$Main$init, dc: author$project$Main$subscriptions, dw: author$project$Main$update, dy: author$project$View$view});
+	{cA: author$project$Main$init, db: author$project$Main$subscriptions, dv: author$project$Main$update, dx: author$project$View$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	A2(
 		elm$json$Json$Decode$andThen,
@@ -6665,7 +6586,7 @@ _Platform_export({'Main':{'init':author$project$Main$main(
 				elm$json$Json$Decode$andThen,
 				function (host) {
 					return elm$json$Json$Decode$succeed(
-						{a9: host, w: section});
+						{bb: host, w: section});
 				},
 				A2(elm$json$Json$Decode$field, 'host', elm$json$Json$Decode$string));
 		},
