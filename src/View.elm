@@ -10,7 +10,9 @@ import Types exposing (..)
 view : Model -> Html Msg
 view model =
     div
-        [ class "curlingio_container" ]
+        [ class "curlingio_container"
+        , style "padding" "10px"
+        ]
         [ viewItems model ]
 
 
@@ -96,6 +98,7 @@ viewItem item =
     div
         [ class "curlingio_item"
         , style "display" "flex"
+        , style "justify-content" "start"
         , style "padding" "5px 0"
         , style "margin" "5px 0"
         , style "border-bottom" "1px solid #eee"
@@ -104,6 +107,7 @@ viewItem item =
             [ class "curlingio_item-details"
             , style "min-width" "180px"
             , style "flex-grow" "1"
+            , style "text-align" "left"
             ]
             [ a
                 [ class "curlingio_item-name"
@@ -126,6 +130,7 @@ viewItem item =
         , div
             [ class "curlingio_item-price"
             , style "min-width" "140px"
+            , style "text-align" "right"
             ]
             [ div [ style "margin-bottom" "5px" ]
                 [ text item.price ]

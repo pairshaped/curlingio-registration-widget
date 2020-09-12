@@ -1,27 +1,9 @@
-module Main exposing (getItems, init, main, subscriptions, update)
+module Main exposing (..)
 
 import Browser
 import Http
 import Types exposing (..)
 import View exposing (view)
-
-
-
--- MAIN
-
-
-main =
-    Browser.element
-        { init = init
-        , update = update
-        , subscriptions = subscriptions
-        , view = view
-        }
-
-
-init : Flags -> ( Model, Cmd Msg )
-init flags =
-    ( { flags = flags, filter = "", items = Loading }, getItems flags.host flags.section )
 
 
 
@@ -84,3 +66,22 @@ getItems host section =
         { url = host ++ "/" ++ section ++ ".json?season=current"
         , expect = Http.expectJson GotItems itemsDecoder
         }
+
+
+
+---- PROGRAM ----
+
+
+main : Program Flags Model Msg
+main =
+    Browser.element
+        { view = view
+        , init = init
+        , update = update
+        , subscriptions = always Sub.none
+        }
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( { flags = flags, filter = "", items = Loading }, getItems flags.host flags.section )
