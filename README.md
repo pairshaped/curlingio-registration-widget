@@ -20,9 +20,7 @@ To embed a widget in one of your pages, you simple copy and paste the javascript
 
 To run the development environment:
 
-`./dev.sh`
-
-This will open up the `dev.html` screen using elm-live.
+`elm-app start`
 
 ## Deployment
 
