@@ -4,7 +4,8 @@ import * as serviceWorker from './serviceWorker';
 
 Elm.Main.init({
   node: document.getElementById("curlingio-widget"),
-  flags: { host: "https://demo.curling.io", section: "leagues" }
+  // flags: { host: "http://demo.curling.test:3000", section: "leagues" }
+  flags: { host: "http://demo.curling.io", section: "leagues" }
 });
 
 // If you want your app to work offline and load faster, you can change
