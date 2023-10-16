@@ -1,3 +1,9 @@
+# ** THIS WIDGET IS NO LONGER SUPPORTED **
+
+Please use our new registration and results widget instead:
+<https://github.com/pairshaped/curlingio-results>
+
+
 ## Using the Widgets
 
 To embed a widget in one of your pages, you simple copy and paste the javascript snippet below. There are two parameters that will need to be customized:
